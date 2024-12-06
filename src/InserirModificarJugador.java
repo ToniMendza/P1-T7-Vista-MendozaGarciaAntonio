@@ -1,7 +1,11 @@
 
 import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+import org.milaifontanals.clubEsportiu.model.ExceptionClub;
 import org.milaifontanals.clubEsportiu.model.Jugador;
 import org.milaifontanals.clubEsportiu.persistencia.GestorBDClubEsportiuException;
 import org.milaifontanals.clubEsportiu.persistencia.IGestorBDClubEsportiu;
@@ -41,11 +45,13 @@ public class InserirModificarJugador extends javax.swing.JFrame {
 
             txtNom.setText(jugador.getNom());
             txtCognom.setText(jugador.getCognoms());
-            txtFiRevisio.setText(String.valueOf(jugador.getAnyFiRevisio()));
+            txtFiRevisio.setText(jugador.getRevisio());
             txtIdLegal.setText(jugador.getIdLegal());
             txtIban.setText(jugador.getIBAN());
             txtAdreca.setText(jugador.getAdreca());
-            txtNaixement.setText(jugador.getDataNaixement().toString());
+            Date date = Date.from(jugador.getDataNaixement().atStartOfDay(ZoneId.systemDefault()).toInstant());
+            txtNaix.setDate(date);
+//            txtNaixement.setText(jugador.getDataNaixement().toString());
 
             rbHome.setSelected(jugador.getSexe() == 'H');
             rbDona.setSelected(jugador.getSexe() != 'H');
@@ -82,7 +88,7 @@ public class InserirModificarJugador extends javax.swing.JFrame {
         jLabel8 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
         btnInserir = new javax.swing.JButton();
-        txtNaixement = new javax.swing.JTextField();
+        txtNaix = new com.toedter.calendar.JDateChooser();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Introduir/Modificar Jugador");
@@ -105,7 +111,7 @@ public class InserirModificarJugador extends javax.swing.JFrame {
 
         jLabel3.setText("Cognom:");
 
-        jLabel4.setText("Fi Revisió:");
+        jLabel4.setText("Revisió:");
 
         jLabel5.setText("Id Legal");
 
@@ -120,6 +126,11 @@ public class InserirModificarJugador extends javax.swing.JFrame {
         });
 
         rbHome.setText("Home");
+        rbHome.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rbHomeActionPerformed(evt);
+            }
+        });
 
         rbDona.setText("Dona");
 
@@ -153,80 +164,78 @@ public class InserirModificarJugador extends javax.swing.JFrame {
                     .addComponent(jLabel6)
                     .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(3, 3, 3)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(txtNom, javax.swing.GroupLayout.DEFAULT_SIZE, 276, Short.MAX_VALUE)
+                    .addComponent(txtCognom)
+                    .addComponent(txtFiRevisio)
+                    .addComponent(txtIdLegal)
+                    .addComponent(txtIban)
+                    .addComponent(txtAdreca)
+                    .addComponent(txtNaix, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(txtNaixement)
-                        .addGap(367, 367, 367))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 110, Short.MAX_VALUE)
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(20, 20, 20))
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(txtNom, javax.swing.GroupLayout.DEFAULT_SIZE, 276, Short.MAX_VALUE)
-                            .addComponent(txtCognom)
-                            .addComponent(txtFiRevisio)
-                            .addComponent(txtIdLegal)
-                            .addComponent(txtIban)
-                            .addComponent(txtAdreca))
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(103, 103, 103)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(btnInserir)
                             .addGroup(layout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 110, Short.MAX_VALUE)
-                                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(20, 20, 20))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(103, 103, 103)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(btnInserir)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(rbHome)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(rbDona)))
-                                .addGap(0, 0, Short.MAX_VALUE))))))
+                                .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(rbHome)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(rbDona)))
+                        .addGap(0, 0, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(41, 41, 41)
-                .addComponent(jLabel1)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(41, 41, 41)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel2)
-                            .addComponent(txtNom, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel3)
-                            .addComponent(txtCognom, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel4)
-                            .addComponent(txtFiRevisio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel5)
-                            .addComponent(txtIdLegal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel7)
-                            .addComponent(txtIban, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel6)
-                            .addComponent(txtAdreca, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(rbHome)
-                                .addComponent(jLabel8)
-                                .addComponent(rbDona))))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(29, 29, 29)
-                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(10, 10, 10)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel9)
-                    .addComponent(txtNaixement, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jLabel1)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(41, 41, 41)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(jLabel2)
+                                    .addComponent(txtNom, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(jLabel3)
+                                    .addComponent(txtCognom, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(jLabel4)
+                                    .addComponent(txtFiRevisio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(jLabel5)
+                                    .addComponent(txtIdLegal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(jLabel7)
+                                    .addComponent(txtIban, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addComponent(rbHome)
+                                        .addComponent(jLabel8)
+                                        .addComponent(rbDona))
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addComponent(jLabel6)
+                                        .addComponent(txtAdreca, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(29, 29, 29)
+                                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(13, 13, 13)
+                        .addComponent(jLabel9))
+                    .addComponent(txtNaix, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(btnInserir)
-                .addContainerGap(65, Short.MAX_VALUE))
+                .addContainerGap(68, Short.MAX_VALUE))
         );
 
         pack();
@@ -238,17 +247,56 @@ public class InserirModificarJugador extends javax.swing.JFrame {
     }//GEN-LAST:event_txtNomActionPerformed
 
     private void btnInserirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInserirActionPerformed
-        String nom,cognoms,Iban,Adreca;
-        LocalDate naix = null;
-        txtNom.setText(jugador.getNom());
-            txtCognom.setText(jugador.getCognoms());
-            txtFiRevisio.setText(String.valueOf(jugador.getAnyFiRevisio()));
-            txtIdLegal.setText(jugador.getIdLegal());
-            txtIban.setText(jugador.getIBAN());
-            txtAdreca.setText(jugador.getAdreca());
-            txtNaixement.setText(jugador.getDataNaixement().toString());
+
+        Jugador j = new Jugador();
+        String nom = txtNom.getText().trim();
+        String cognom = txtCognom.getText().trim();
+        String Revisio = txtFiRevisio.getText().trim();
+        String idLegal = txtIdLegal.getText().trim();
+        String iban = txtIban.getText().trim();
+        String adreca = txtAdreca.getText().trim();
+        java.util.Date date = txtNaix.getDate();
+
+        if (nom.isEmpty() || cognom.isEmpty() || Revisio.isEmpty() || idLegal.isEmpty()|| iban.isEmpty() || adreca.isEmpty() || date == null
+                || (rbDona.isSelected() == false && rbHome.isSelected() == false)) {
+            JOptionPane.showMessageDialog(null, "Tots els camps són obligatoris. Si us plau, ompliu-los tots.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        try {
+            j.setNom(nom);
+            j.setCognoms(cognom);
+            j.setSexe(rbHome.isSelected() ? 'H' : 'D');
+            j.setIBAN(iban);
+            j.setRevisio(Revisio);
+            j.setAdreca(adreca);
+            j.setIdLegal(idLegal);
+            j.setDataNaixement(date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
+            j.setFoto("C:\\Users\\isard\\Desktop\\FOTOS-bd\\pexels-olly-846741.jpg");
+            
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, "Error en les dades del jugador: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            ex.printStackTrace();
+            return;
+        }
+
+        try {
+            if(jugadorId==0)
+            capaOracleJDBC.afegirJugador(j);
+           
+            
+//            capaOracleJDBC.confirmarCanvis();
+            JOptionPane.showMessageDialog(null, "Jugador inserit correctament");
+        } catch (GestorBDClubEsportiuException ex) {
+            JOptionPane.showMessageDialog(null, "Error al insertar el jugador: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            ex.printStackTrace();
+        }
 
     }//GEN-LAST:event_btnInserirActionPerformed
+
+    private void rbHomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbHomeActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_rbHomeActionPerformed
 
 //    /**
 //     * @param args the command line arguments
@@ -305,7 +353,7 @@ public class InserirModificarJugador extends javax.swing.JFrame {
     private javax.swing.JTextField txtFiRevisio;
     private javax.swing.JTextField txtIban;
     private javax.swing.JTextField txtIdLegal;
-    private javax.swing.JTextField txtNaixement;
+    private com.toedter.calendar.JDateChooser txtNaix;
     private javax.swing.JTextField txtNom;
     // End of variables declaration//GEN-END:variables
 }
