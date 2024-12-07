@@ -204,6 +204,7 @@ public class Login extends javax.swing.JFrame {
     // Validar si los campos están vacíos
     if (txtUsuari.getText().isEmpty() || txtContrasenya.getText().isEmpty()) {
         JOptionPane.showMessageDialog(this, "Error. El nom o la contrasenya estan buits", "Error", JOptionPane.ERROR_MESSAGE);
+    return;
     } else {
              try {
                  // Intentar obtener el usuario de la base de datos
