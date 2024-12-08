@@ -62,7 +62,7 @@ public class FinestraLogin extends javax.swing.JFrame {
             tmp = capaOracleJDBC.obtenirTemporades();
             for (Iterator<Temporada> iterator = tmp.iterator(); iterator.hasNext();) {
                 Temporada next = iterator.next();
-                comboTemporada.addItem(next.getAny_temp());
+                comboTemporada.addItem(next);
 
             }
 
@@ -371,7 +371,8 @@ public class FinestraLogin extends javax.swing.JFrame {
     }//GEN-LAST:event_btnEquipsActionPerformed
 
     private void btnJugadorsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnJugadorsActionPerformed
-        GestioJugadors fGestioJugador = new GestioJugadors(capaOracleJDBC);
+        Temporada temporada=(Temporada) comboTemporada.getSelectedItem();
+        GestioJugadors fGestioJugador = new GestioJugadors(capaOracleJDBC,temporada);
         fGestioJugador.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnJugadorsActionPerformed
@@ -453,8 +454,7 @@ public class FinestraLogin extends javax.swing.JFrame {
     private javax.swing.JButton btnEquips;
     private javax.swing.JButton btnEsbTemporada;
     private javax.swing.JButton btnJugadors;
-    private javax.swing.JComboBox<Integer
-    > comboTemporada;
+    private javax.swing.JComboBox<Temporada > comboTemporada;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

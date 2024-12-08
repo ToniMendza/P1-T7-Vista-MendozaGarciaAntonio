@@ -46,15 +46,17 @@ public class GestioJugadors extends javax.swing.JFrame {
     private Jugador jugador;
     private List<Jugador> jugadors;
     private static final int ID_JUGADOR_INDEX = 5;
+    private Temporada temp;
 
     /**
      * Creates new form GestioJugadors
      */
-    public GestioJugadors(IGestorBDClubEsportiu capa) {
+    public GestioJugadors(IGestorBDClubEsportiu capa, Temporada temporada) {
         try {
             initComponents();
 
             this.capaOracleJDBC = capa;
+            this.temp = temporada;
             lblFormat.setVisible(false);
             lblFormatNif.setVisible(false);
             lblInserir.setVisible(false);
@@ -102,6 +104,7 @@ public class GestioJugadors extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        buttonGroup1 = new javax.swing.ButtonGroup();
         tornarEnrere = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
@@ -171,6 +174,7 @@ public class GestioJugadors extends javax.swing.JFrame {
         jLabel6.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel6.setText("Ordenar per:");
 
+        buttonGroup1.add(rbCognom);
         rbCognom.setSelected(true);
         rbCognom.setText("cognom");
         rbCognom.addActionListener(new java.awt.event.ActionListener() {
@@ -179,6 +183,7 @@ public class GestioJugadors extends javax.swing.JFrame {
             }
         });
 
+        buttonGroup1.add(rbNaixement);
         rbNaixement.setText("data de naixement");
         rbNaixement.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -443,7 +448,7 @@ public class GestioJugadors extends javax.swing.JFrame {
             // Recuperar el ID desde el modelo (columna 5 en este caso)
             int id = obtenirIDJugador();
             if (id != -1) {
-                InserirModificarJugador log = new InserirModificarJugador(id, capaOracleJDBC);
+                InserirModificarJugador log = new InserirModificarJugador(id, capaOracleJDBC, temp);
                 log.setVisible(true);
                 this.dispose();
                 System.out.println("Jugador seleccionado: " + id);
@@ -480,12 +485,15 @@ public class GestioJugadors extends javax.swing.JFrame {
     }//GEN-LAST:event_comboCategoriaActionPerformed
 
     private void btnCercarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCercarActionPerformed
+
         Categoria categoriaSeleccionada = (Categoria) comboCategoria.getSelectedItem();
         String nomCategoria = categoriaSeleccionada.getNom();
         int idCategoria = 0;
         LocalDate data = null;
         String nomEquip = null;
         String nif = null;
+        int ordreJugadors;
+
         if (categoriaSeleccionada != null) {
             idCategoria = categoriaSeleccionada.getId();
 
@@ -499,14 +507,13 @@ public class GestioJugadors extends javax.swing.JFrame {
                 Logger.getLogger(GestioJugadors.class.getName()).log(Level.SEVERE, null, ex);
             }
 
-            if (validaData != null) {
-                data = validaData;
-            } else {
+            if (validaData == null) {
                 JOptionPane.showMessageDialog(this, "La data introduïda no és vàlida. Format esperat: dd/MM/yyyy",
                         "Error de data", JOptionPane.ERROR_MESSAGE);
                 lblFormat.setVisible(true);
                 return; // Salir del método porque la fecha es inválida
             }
+            data = validaData;
 
 //            if (validaData == null) {
 //                JOptionPane.showMessageDialog(this, "La data introduïda no és vàlida. Format esperat: dd/MM/yyyy",
@@ -529,8 +536,11 @@ public class GestioJugadors extends javax.swing.JFrame {
                 return;
             }
         }
+        ordreJugadors = rbCognom.isSelected() ? 1 : 0;
+        
         try {
-            jugadors = capaOracleJDBC.filtreJugadorCatDataNomNif(idCategoria, data != null ? java.sql.Date.valueOf(data) : null, nomEquip != null ? nomEquip : null, nif);
+            jugadors = capaOracleJDBC.filtreJugadorCatDataNomNif(idCategoria, data != null ? java.sql.Date.valueOf(data) : null,
+                    nomEquip != null ? nomEquip : null, nif, temp, ordreJugadors);
             omplirTaula(jugadors, nomCategoria);
 
             System.out.println(jugadors.toString());
@@ -545,7 +555,7 @@ public class GestioJugadors extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         int jugador = 0;
-        InserirModificarJugador log = new InserirModificarJugador(jugador, capaOracleJDBC);
+        InserirModificarJugador log = new InserirModificarJugador(jugador, capaOracleJDBC, temp);
         log.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
@@ -559,8 +569,8 @@ public class GestioJugadors extends javax.swing.JFrame {
                 try {
                     if (capaOracleJDBC.jugadorSenseEquip(jugadorDel)) {
                         capaOracleJDBC.eliminarJugador(jugadorDel);
-                         JOptionPane.showMessageDialog(null, "Jugador eliminat correctament");
-                         //            capaOracleJDBC.confirmarCanvis();
+                        JOptionPane.showMessageDialog(null, "Jugador eliminat correctament");
+                        //            capaOracleJDBC.confirmarCanvis();
                     } else {
                         JOptionPane.showMessageDialog(null, "Aquest jugador pertany a un equip, no és pot esborrar: ", "Error", JOptionPane.ERROR_MESSAGE);
                         return;
@@ -580,11 +590,6 @@ public class GestioJugadors extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnEsborrarActionPerformed
 
-    //    private void ValidaNIF(String Nif){
-//        if (Nif == null || !Nif.matches("^\\d{8}[A-Za-z]$")) {
-//
-//    }
-//    }
     public void omplirTaula(List<Jugador> jugadors, String cat) {
         DefaultTableModel model = (DefaultTableModel) tableJugador.getModel();
 
@@ -633,6 +638,7 @@ public class GestioJugadors extends javax.swing.JFrame {
     private javax.swing.JButton btnEsborrar;
     private javax.swing.JButton btnExportar;
     private javax.swing.JButton btnModificar;
+    private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JComboBox<Categoria > comboCategoria;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
