@@ -74,8 +74,8 @@ public class FinestraLogin extends javax.swing.JFrame {
         // Inicializar los componentes gráficos
     }
 
-    public FinestraLogin() {
-
+    public FinestraLogin(IGestorBDClubEsportiu capa) {
+        this.capaOracleJDBC=capa;
         initComponents();
     }
 
@@ -365,7 +365,8 @@ public class FinestraLogin extends javax.swing.JFrame {
     }//GEN-LAST:event_comboTemporadaActionPerformed
 
     private void btnEquipsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEquipsActionPerformed
-        GestioEquips fGestioEquips = new GestioEquips(capaOracleJDBC);
+        Temporada temporada=(Temporada) comboTemporada.getSelectedItem();
+        GestioEquips fGestioEquips = new GestioEquips(capaOracleJDBC, temporada);
         fGestioEquips.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnEquipsActionPerformed

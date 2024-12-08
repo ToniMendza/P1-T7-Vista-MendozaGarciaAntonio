@@ -3,29 +3,36 @@ import java.awt.Font;
 import java.awt.font.TextAttribute;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.milaifontanals.clubEsportiu.model.Equip;
+import org.milaifontanals.clubEsportiu.model.Temporada;
+import org.milaifontanals.clubEsportiu.persistencia.GestorBDClubEsportiuException;
 import org.milaifontanals.clubEsportiu.persistencia.IGestorBDClubEsportiu;
 
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-
 /**
  *
  * @author isard
  */
 public class GestioEquips extends javax.swing.JFrame {
+
     private IGestorBDClubEsportiu capaOracleJDBC = null;
+    private Temporada tmp;
+    private FinestraLogin fLogin;
+
     /**
      * Creates new form GestioEquips
      */
-    public GestioEquips(IGestorBDClubEsportiu capa) {
+    public GestioEquips(IGestorBDClubEsportiu capa, Temporada temp) {
         initComponents();
-  
-        
+        this.tmp = temp;
+
         this.capaOracleJDBC = capa;
- 
+
     }
 
     /**
@@ -342,31 +349,35 @@ public class GestioEquips extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(33, 33, 33)
+                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(comboNomEquip, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 382, Short.MAX_VALUE)
-                        .addComponent(btnInsert, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(33, 33, 33)
+                        .addComponent(tornarEnrere)
+                        .addGap(99, 711, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(6, 6, 6)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addGap(0, 0, Short.MAX_VALUE)
+                                .addComponent(tbCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, 562, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(btnEsborrar, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                        .addComponent(btnInforme, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGap(15, 15, 15)
+                                        .addComponent(btnInforme, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE))))
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(tornarEnrere)
-                                .addGap(10, 622, Short.MAX_VALUE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(tbCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, 562, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 0, Short.MAX_VALUE)))))
-                .addGap(89, 89, 89))
+                                .addGap(27, 27, 27)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(0, 0, Short.MAX_VALUE))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(comboNomEquip, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(btnInsert, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                        .addGap(89, 89, 89))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -378,19 +389,15 @@ public class GestioEquips extends javax.swing.JFrame {
                     .addComponent(btnInsert))
                 .addGap(18, 18, 18)
                 .addComponent(btnEsborrar)
-                .addGap(52, 52, 52)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jButton3)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(0, 11, Short.MAX_VALUE)
-                        .addComponent(tbCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, 223, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(tornarEnrere)
-                            .addComponent(btnInforme))
-                        .addGap(19, 19, 19))))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 40, Short.MAX_VALUE)
+                .addComponent(jButton3)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(tbCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, 223, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(tornarEnrere)
+                    .addComponent(btnInforme))
+                .addGap(19, 19, 19))
         );
 
         pack();
@@ -402,7 +409,13 @@ public class GestioEquips extends javax.swing.JFrame {
     }//GEN-LAST:event_comboNomEquipActionPerformed
 
     private void btnInsertActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInsertActionPerformed
-        // TODO add your handling code here:
+        try {
+            InserirEquip finserEquip = new InserirEquip(capaOracleJDBC, tmp,this);
+            finserEquip.setVisible(true);
+            this.setVisible(false);
+        } catch (GestorBDClubEsportiuException ex) {
+            Logger.getLogger(GestioEquips.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_btnInsertActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
@@ -410,28 +423,28 @@ public class GestioEquips extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void tornarEnrereMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tornarEnrereMouseClicked
-         FinestraLogin log = new FinestraLogin();
+        FinestraLogin log = new FinestraLogin(capaOracleJDBC);
         log.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_tornarEnrereMouseClicked
 
     private void tbCategoriaStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_tbCategoriaStateChanged
-           // Código para manejar el cambio de pestaña
-    int selectedIndex = tbCategoria.getSelectedIndex();
-    System.out.println("Pestaña seleccionada: " + selectedIndex);
-
-    // Agrega lógica según la pestaña seleccionada
-            if (selectedIndex == 0) {
-            System.out.println("Contenido de la pestaña 1");
-        } else if (selectedIndex == 1) {
-            System.out.println("Contenido de la pestaña 2");
-        } else if (selectedIndex == 2) {
-            System.out.println("Contenido de la pestaña 3");
-        } else if (selectedIndex == 3) {
-            System.out.println("Contenido de la pestaña 4");
-        } else if (selectedIndex == 4) {
-            System.out.println("Contenido de la pestaña 5");
-        }
+//           // Código para manejar el cambio de pestaña
+//    int selectedIndex = tbCategoria.getSelectedIndex();
+//    System.out.println("Pestaña seleccionada: " + selectedIndex);
+//
+//    // Agrega lógica según la pestaña seleccionada
+//            if (selectedIndex == 0) {
+//            System.out.println("Contenido de la pestaña 1");
+//        } else if (selectedIndex == 1) {
+//            System.out.println("Contenido de la pestaña 2");
+//        } else if (selectedIndex == 2) {
+//            System.out.println("Contenido de la pestaña 3");
+//        } else if (selectedIndex == 3) {
+//            System.out.println("Contenido de la pestaña 4");
+//        } else if (selectedIndex == 4) {
+//            System.out.println("Contenido de la pestaña 5");
+//        }
     }//GEN-LAST:event_tbCategoriaStateChanged
 
     /**
