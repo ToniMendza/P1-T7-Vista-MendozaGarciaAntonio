@@ -2,9 +2,15 @@
 import java.awt.Font;
 import java.awt.font.TextAttribute;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+import javax.swing.ListSelectionModel;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumn;
 import org.milaifontanals.clubEsportiu.model.Equip;
 import org.milaifontanals.clubEsportiu.model.Temporada;
 import org.milaifontanals.clubEsportiu.persistencia.GestorBDClubEsportiuException;
@@ -23,16 +29,100 @@ public class GestioEquips extends javax.swing.JFrame {
     private IGestorBDClubEsportiu capaOracleJDBC = null;
     private Temporada tmp;
     private FinestraLogin fLogin;
+    private List<Equip> llEquips;
+    private int idEquip;
+    private List<Temporada> llTemporades;
+    private Temporada tempEscollida;
 
     /**
      * Creates new form GestioEquips
      */
     public GestioEquips(IGestorBDClubEsportiu capa, Temporada temp) {
         initComponents();
-        this.tmp = temp;
-
+        
         this.capaOracleJDBC = capa;
+//        this.tmp = temp;
 
+        try {
+            llTemporades = capaOracleJDBC.obtenirTemporades();
+
+            for (Iterator<Temporada> iterator = llTemporades.iterator(); iterator.hasNext();) {
+                Temporada next = iterator.next();
+                comboTemporada.addItem(next);
+
+            }
+        } catch (GestorBDClubEsportiuException ex) {
+            Logger.getLogger(GestioEquips.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        
+        tempEscollida=(Temporada) comboTemporada.getSelectedItem();
+        cercarEquips();
+        TableColumn idColumn = tableEquips.getColumnModel().getColumn(4);
+        tableEquips.removeColumn(idColumn);
+        tableEquips.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+    }
+
+    private void cercarEquips() {
+        try {
+            llEquips = capaOracleJDBC.obtenirEquipsPerTemporada(tempEscollida.getAny_temp());
+            omplirTaula(llEquips);
+        } catch (GestorBDClubEsportiuException ex) {
+            Logger.getLogger(GestioEquips.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }
+
+    public void omplirTaula(List<Equip> equips) {
+        DefaultTableModel model = (DefaultTableModel) tableEquips.getModel();
+        int idAnterior = -1;
+
+        model.setRowCount(0);
+
+        for (Equip e : equips) {
+            try {
+
+                if (idAnterior != e.getIdCategoria()) {
+                    model.addRow(new Object[]{
+                        capaOracleJDBC.obtenirNomCategoriaPerId(e.getIdCategoria()), "", "", "", ""});
+                }
+
+                idAnterior = e.getIdCategoria();
+
+                model.addRow(new Object[]{
+                    e.getNom(),
+                    e.getTipus(),
+                    e.getIdAny(),
+                    capaOracleJDBC.obtenirNomCategoriaPerId(e.getIdCategoria()),
+                    e.getId()
+                });
+            } catch (GestorBDClubEsportiuException ex) {
+                Logger.getLogger(GestioEquips.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        tableEquips.getSelectionModel().addListSelectionListener(event -> {
+            if (!event.getValueIsAdjusting()) {
+                int selectedRow = tableEquips.getSelectedRow();
+                if (selectedRow != -1) { 
+                    int modelRow = tableEquips.convertRowIndexToModel(selectedRow); // obtener el valor de la columna oculta, en lugar de usar el índice visual de la tabla.
+                    Object idValue = ((DefaultTableModel) tableEquips.getModel()).getValueAt(modelRow, 4); // Índice en el modelo
+
+                    if (idValue == null || idValue.toString().trim().isEmpty()) {
+
+                        JOptionPane.showMessageDialog(
+                                this, "Has seleccionat una fila separadora. Si us plau, selecciona un equip vàlid.", "Selecció no vàlida",
+                                JOptionPane.WARNING_MESSAGE);
+
+                        // Deselecciona la fila para evitar confusiones
+                        tableEquips.clearSelection();
+                    } else {
+                       
+                        idEquip = Integer.parseInt(idValue.toString());
+                        System.out.println("ID seleccionat: " + idEquip);
+                    }
+                }
+            }
+        });
     }
 
     /**
@@ -51,25 +141,10 @@ public class GestioEquips extends javax.swing.JFrame {
         jButton3 = new javax.swing.JButton();
         tornarEnrere = new javax.swing.JLabel();
         btnInforme = new javax.swing.JButton();
-        tbCategoria = new javax.swing.JTabbedPane();
-        jPanel1 = new javax.swing.JPanel();
-        jScrollPane6 = new javax.swing.JScrollPane();
-        tableJugador5 = new javax.swing.JTable();
-        jPanel2 = new javax.swing.JPanel();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        tableJugador1 = new javax.swing.JTable();
-        jPanel3 = new javax.swing.JPanel();
-        jScrollPane3 = new javax.swing.JScrollPane();
-        tableJugador2 = new javax.swing.JTable();
-        jPanel4 = new javax.swing.JPanel();
-        jScrollPane4 = new javax.swing.JScrollPane();
-        tableJugador3 = new javax.swing.JTable();
-        jPanel5 = new javax.swing.JPanel();
-        jScrollPane5 = new javax.swing.JScrollPane();
-        tableJugador4 = new javax.swing.JTable();
-        jPanel6 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        tableJugador = new javax.swing.JTable();
+        tableEquips = new javax.swing.JTable();
+        jLabel6 = new javax.swing.JLabel();
+        comboTemporada = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Gestió Dels Equips");
@@ -84,7 +159,7 @@ public class GestioEquips extends javax.swing.JFrame {
 
         jLabel3.setText("Equips");
 
-        btnInsert.setText("Inserir/Modificar");
+        btnInsert.setText("Inserir");
         btnInsert.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnInsertActionPerformed(evt);
@@ -92,6 +167,11 @@ public class GestioEquips extends javax.swing.JFrame {
         });
 
         btnEsborrar.setText("Esborrar");
+        btnEsborrar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEsborrarActionPerformed(evt);
+            }
+        });
 
         jButton3.setText("Gestiona Plantilla");
         jButton3.addActionListener(new java.awt.event.ActionListener() {
@@ -115,234 +195,45 @@ public class GestioEquips extends javax.swing.JFrame {
 
         btnInforme.setText("Informe");
 
-        tbCategoria.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "CATEGORIES", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 1, 14))); // NOI18N
-        tbCategoria.addChangeListener(new javax.swing.event.ChangeListener() {
-            public void stateChanged(javax.swing.event.ChangeEvent evt) {
-                tbCategoriaStateChanged(evt);
+        tableEquips.setAutoCreateRowSorter(true);
+        tableEquips.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        tableEquips.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
+            },
+            new String [] {
+                "Nom Equip", "Tipus", "Temporada", "Categoria", "ID"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
             }
         });
+        jScrollPane1.setViewportView(tableEquips);
 
-        tableJugador5.setAutoCreateRowSorter(true);
-        tableJugador5.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        tableJugador5.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null}
-            },
-            new String [] {
-                "Nom Equip", "Tipus", "Temporada"
+        jLabel6.setText("Temporada: ");
+
+        comboTemporada.setMaximumRowCount(6);
+        comboTemporada.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        comboTemporada.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                comboTemporadaItemStateChanged(evt);
             }
-        ));
-        jScrollPane6.setViewportView(tableJugador5);
-
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane6, javax.swing.GroupLayout.DEFAULT_SIZE, 552, Short.MAX_VALUE)
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 5, Short.MAX_VALUE))
-        );
-
-        tbCategoria.addTab("Alevi", jPanel1);
-
-        tableJugador1.setAutoCreateRowSorter(true);
-        tableJugador1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        tableJugador1.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null}
-            },
-            new String [] {
-                "Nom Equip", "Tipus", "Temporada"
-            }
-        ));
-        jScrollPane2.setViewportView(tableJugador1);
-
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 552, Short.MAX_VALUE)
-        );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 5, Short.MAX_VALUE))
-        );
-
-        tbCategoria.addTab("Benjami", jPanel2);
-
-        tableJugador2.setAutoCreateRowSorter(true);
-        tableJugador2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        tableJugador2.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null}
-            },
-            new String [] {
-                "Nom Equip", "Tipus", "Temporada"
-            }
-        ));
-        jScrollPane3.setViewportView(tableJugador2);
-
-        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
-        jPanel3.setLayout(jPanel3Layout);
-        jPanel3Layout.setHorizontalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 552, Short.MAX_VALUE)
-        );
-        jPanel3Layout.setVerticalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 5, Short.MAX_VALUE))
-        );
-
-        tbCategoria.addTab("Infantil", jPanel3);
-
-        tableJugador3.setAutoCreateRowSorter(true);
-        tableJugador3.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        tableJugador3.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null}
-            },
-            new String [] {
-                "Nom Equip", "Tipus", "Temporada"
-            }
-        ));
-        jScrollPane4.setViewportView(tableJugador3);
-
-        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
-        jPanel4.setLayout(jPanel4Layout);
-        jPanel4Layout.setHorizontalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 552, Short.MAX_VALUE)
-        );
-        jPanel4Layout.setVerticalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel4Layout.createSequentialGroup()
-                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 6, Short.MAX_VALUE))
-        );
-
-        tbCategoria.addTab("Cadet", jPanel4);
-
-        tableJugador4.setAutoCreateRowSorter(true);
-        tableJugador4.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        tableJugador4.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null}
-            },
-            new String [] {
-                "Nom Equip", "Tipus", "Temporada"
-            }
-        ));
-        jScrollPane5.setViewportView(tableJugador4);
-
-        javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
-        jPanel5.setLayout(jPanel5Layout);
-        jPanel5Layout.setHorizontalGroup(
-            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 552, Short.MAX_VALUE)
-        );
-        jPanel5Layout.setVerticalGroup(
-            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel5Layout.createSequentialGroup()
-                .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 6, Short.MAX_VALUE))
-        );
-
-        tbCategoria.addTab("Juvenil", jPanel5);
-
-        tableJugador.setAutoCreateRowSorter(true);
-        tableJugador.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        tableJugador.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null}
-            },
-            new String [] {
-                "Nom Equip", "Tipus", "Temporada"
-            }
-        ));
-        jScrollPane1.setViewportView(tableJugador);
-
-        javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
-        jPanel6.setLayout(jPanel6Layout);
-        jPanel6Layout.setHorizontalGroup(
-            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 552, Short.MAX_VALUE)
-        );
-        jPanel6Layout.setVerticalGroup(
-            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel6Layout.createSequentialGroup()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
-        );
-
-        tbCategoria.addTab("Senior", jPanel6);
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -352,32 +243,32 @@ public class GestioEquips extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(33, 33, 33)
-                        .addComponent(tornarEnrere)
-                        .addGap(99, 711, Short.MAX_VALUE))
+                        .addGap(27, 27, 27)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel6)
+                            .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(comboTemporada, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(comboNomEquip, 0, 101, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(btnEsborrar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnInsert, javax.swing.GroupLayout.DEFAULT_SIZE, 148, Short.MAX_VALUE)
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                .addGap(15, 15, 15)
+                                .addComponent(btnInforme, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jButton3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(89, 89, 89))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(tbCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, 562, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(btnEsborrar, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGap(15, 15, 15)
-                                        .addComponent(btnInforme, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addGap(33, 33, 33)
+                                .addComponent(tornarEnrere))
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(27, 27, 27)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(0, 0, Short.MAX_VALUE))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(comboNomEquip, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(btnInsert, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                        .addGap(89, 89, 89))))
+                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 733, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addContainerGap(60, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -387,13 +278,20 @@ public class GestioEquips extends javax.swing.JFrame {
                     .addComponent(comboNomEquip, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel3)
                     .addComponent(btnInsert))
-                .addGap(18, 18, 18)
-                .addComponent(btnEsborrar)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 40, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addComponent(btnEsborrar))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(32, 32, 32)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel6)
+                            .addComponent(comboTemporada, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 21, Short.MAX_VALUE)
                 .addComponent(jButton3)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(tbCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, 223, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 198, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(25, 25, 25)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(tornarEnrere)
                     .addComponent(btnInforme))
@@ -410,7 +308,8 @@ public class GestioEquips extends javax.swing.JFrame {
 
     private void btnInsertActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInsertActionPerformed
         try {
-            InserirEquip finserEquip = new InserirEquip(capaOracleJDBC, tmp,this);
+            
+            InserirEquip finserEquip = new InserirEquip(capaOracleJDBC, tempEscollida, this);
             finserEquip.setVisible(true);
             this.setVisible(false);
         } catch (GestorBDClubEsportiuException ex) {
@@ -428,24 +327,40 @@ public class GestioEquips extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_tornarEnrereMouseClicked
 
-    private void tbCategoriaStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_tbCategoriaStateChanged
-//           // Código para manejar el cambio de pestaña
-//    int selectedIndex = tbCategoria.getSelectedIndex();
-//    System.out.println("Pestaña seleccionada: " + selectedIndex);
-//
-//    // Agrega lógica según la pestaña seleccionada
-//            if (selectedIndex == 0) {
-//            System.out.println("Contenido de la pestaña 1");
-//        } else if (selectedIndex == 1) {
-//            System.out.println("Contenido de la pestaña 2");
-//        } else if (selectedIndex == 2) {
-//            System.out.println("Contenido de la pestaña 3");
-//        } else if (selectedIndex == 3) {
-//            System.out.println("Contenido de la pestaña 4");
-//        } else if (selectedIndex == 4) {
-//            System.out.println("Contenido de la pestaña 5");
-//        }
-    }//GEN-LAST:event_tbCategoriaStateChanged
+    private void btnEsborrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEsborrarActionPerformed
+
+        if (tableEquips.getSelectedRow() != -1 && idEquip != 0) {
+            int opcion = JOptionPane.showConfirmDialog(
+                    this, "El Equip podria tenir jugadors assignats. Estàs segur que vols esborrar-lo?", "Confirmació d'eliminació",
+                    JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
+
+            if (opcion == JOptionPane.YES_OPTION) {
+                Equip e = null;
+                try {
+                    e = capaOracleJDBC.obtenirEquipPerId(idEquip);
+                    capaOracleJDBC.eliminarEquipMembre(idEquip);
+
+                    capaOracleJDBC.eliminarUnEquip(e);
+//                capaOracleJDBC.confirmarCanvis();
+                    JOptionPane.showMessageDialog(this, "Equip eliminat correctament.", "Eliminació exitosa", JOptionPane.INFORMATION_MESSAGE);
+
+                } catch (GestorBDClubEsportiuException ex) {
+                    Logger.getLogger(GestioEquips.class.getName()).log(Level.SEVERE, null, ex);
+                    JOptionPane.showMessageDialog(this, "Error en eliminar l'equip. Si us plau, prova més tard.", "Error d'eliminació", JOptionPane.ERROR_MESSAGE);
+
+                }
+            }
+        } else {
+            JOptionPane.showMessageDialog(
+                    this, "Has de seleccionar algún equip per esborrar-lo.", "Selecció no vàlida", JOptionPane.WARNING_MESSAGE);
+        }
+
+    }//GEN-LAST:event_btnEsborrarActionPerformed
+
+    private void comboTemporadaItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_comboTemporadaItemStateChanged
+       tempEscollida=(Temporada) comboTemporada.getSelectedItem();
+        cercarEquips();
+    }//GEN-LAST:event_comboTemporadaItemStateChanged
 
     /**
      * @param args the command line arguments
@@ -487,27 +402,12 @@ public class GestioEquips extends javax.swing.JFrame {
     private javax.swing.JButton btnInforme;
     private javax.swing.JButton btnInsert;
     private javax.swing.JComboBox<Equip> comboNomEquip;
+    private javax.swing.JComboBox<Temporada > comboTemporada;
     private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
-    private javax.swing.JPanel jPanel3;
-    private javax.swing.JPanel jPanel4;
-    private javax.swing.JPanel jPanel5;
-    private javax.swing.JPanel jPanel6;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JScrollPane jScrollPane3;
-    private javax.swing.JScrollPane jScrollPane4;
-    private javax.swing.JScrollPane jScrollPane5;
-    private javax.swing.JScrollPane jScrollPane6;
-    private javax.swing.JTable tableJugador;
-    private javax.swing.JTable tableJugador1;
-    private javax.swing.JTable tableJugador2;
-    private javax.swing.JTable tableJugador3;
-    private javax.swing.JTable tableJugador4;
-    private javax.swing.JTable tableJugador5;
-    private javax.swing.JTabbedPane tbCategoria;
+    private javax.swing.JTable tableEquips;
     private javax.swing.JLabel tornarEnrere;
     // End of variables declaration//GEN-END:variables
 }
