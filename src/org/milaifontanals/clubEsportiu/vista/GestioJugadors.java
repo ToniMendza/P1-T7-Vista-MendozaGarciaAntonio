@@ -1,3 +1,4 @@
+package org.milaifontanals.clubEsportiu.vista;
 
 import java.awt.Color;
 import java.awt.Component;
@@ -19,6 +20,7 @@ import javax.swing.BorderFactory;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
+import javax.swing.ListSelectionModel;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
@@ -72,6 +74,7 @@ public class GestioJugadors extends javax.swing.JFrame {
             }
             TableColumn idColumn = tableJugador.getColumnModel().getColumn(5);
             tableJugador.removeColumn(idColumn);
+            tableJugador.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 //        TableCellRenderer renderizadorConBorde = new DefaultTableCellRenderer() {
 //    @Override
 //    public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
@@ -349,7 +352,6 @@ public class GestioJugadors extends javax.swing.JFrame {
                                     .addGroup(layout.createSequentialGroup()
                                         .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addGap(373, 373, 373)))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(lblFormat)
                                 .addContainerGap())))))
         );
@@ -596,10 +598,9 @@ public class GestioJugadors extends javax.swing.JFrame {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
 // Formatea la fecha
-        
         model.setRowCount(0);
         for (Jugador jugador : jugadors) {
-            model.addRow(new Object[]{jugador.getNom(), jugador.getSexe(),jugador.getDataNaixement().format(formatter) , jugador.getIdLegal(), jugador.getNomCategoria(), jugador.getId()});
+            model.addRow(new Object[]{jugador.getNom(), jugador.getSexe(), jugador.getDataNaixement().format(formatter), jugador.getIdLegal(), jugador.getNomCategoria(), jugador.getId()});
         }
     }
     /**

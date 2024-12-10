@@ -1,3 +1,4 @@
+package org.milaifontanals.clubEsportiu.vista;
 
 import java.awt.Font;
 import java.awt.font.TextAttribute;
@@ -39,7 +40,7 @@ public class GestioEquips extends javax.swing.JFrame {
      */
     public GestioEquips(IGestorBDClubEsportiu capa, Temporada temp) {
         initComponents();
-        
+
         this.capaOracleJDBC = capa;
 //        this.tmp = temp;
 
@@ -55,8 +56,7 @@ public class GestioEquips extends javax.swing.JFrame {
             Logger.getLogger(GestioEquips.class.getName()).log(Level.SEVERE, null, ex);
         }
 
-        
-        tempEscollida=(Temporada) comboTemporada.getSelectedItem();
+        tempEscollida = (Temporada) comboTemporada.getSelectedItem();
         cercarEquips();
         TableColumn idColumn = tableEquips.getColumnModel().getColumn(4);
         tableEquips.removeColumn(idColumn);
@@ -103,7 +103,7 @@ public class GestioEquips extends javax.swing.JFrame {
         tableEquips.getSelectionModel().addListSelectionListener(event -> {
             if (!event.getValueIsAdjusting()) {
                 int selectedRow = tableEquips.getSelectedRow();
-                if (selectedRow != -1) { 
+                if (selectedRow != -1) {
                     int modelRow = tableEquips.convertRowIndexToModel(selectedRow); // obtener el valor de la columna oculta, en lugar de usar el índice visual de la tabla.
                     Object idValue = ((DefaultTableModel) tableEquips.getModel()).getValueAt(modelRow, 4); // Índice en el modelo
 
@@ -116,7 +116,7 @@ public class GestioEquips extends javax.swing.JFrame {
                         // Deselecciona la fila para evitar confusiones
                         tableEquips.clearSelection();
                     } else {
-                       
+
                         idEquip = Integer.parseInt(idValue.toString());
                         System.out.println("ID seleccionat: " + idEquip);
                     }
@@ -173,7 +173,7 @@ public class GestioEquips extends javax.swing.JFrame {
             }
         });
 
-        jButton3.setText("Gestiona Plantilla");
+        jButton3.setText("Fitxa Equip");
         jButton3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton3ActionPerformed(evt);
@@ -308,7 +308,7 @@ public class GestioEquips extends javax.swing.JFrame {
 
     private void btnInsertActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInsertActionPerformed
         try {
-            
+
             InserirEquip finserEquip = new InserirEquip(capaOracleJDBC, tempEscollida, this);
             finserEquip.setVisible(true);
             this.setVisible(false);
@@ -318,7 +318,22 @@ public class GestioEquips extends javax.swing.JFrame {
     }//GEN-LAST:event_btnInsertActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        // TODO add your handling code here:
+        if (tableEquips.getSelectedRow() != -1 && idEquip != 0) {
+                            Equip e = null;
+                try {
+                    e = capaOracleJDBC.obtenirEquipPerId(idEquip);
+                    FitxaEquip f_FitxaEquip=new FitxaEquip(capaOracleJDBC,e);
+                    f_FitxaEquip.setVisible(true);
+                    this.dispose();
+                } catch (GestorBDClubEsportiuException ex) {
+                    Logger.getLogger(GestioEquips.class.getName()).log(Level.SEVERE, null, ex);
+                    JOptionPane.showMessageDialog(this, "Error en eliminar l'equip. Si us plau, prova més tard.", "Error d'eliminació", JOptionPane.ERROR_MESSAGE);
+
+                }
+        } else {
+            JOptionPane.showMessageDialog(
+                    this, "Has de seleccionar algún equip per gestionar la seva Fitxa.", "Selecció no vàlida", JOptionPane.WARNING_MESSAGE);
+        }
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void tornarEnrereMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tornarEnrereMouseClicked
@@ -358,7 +373,7 @@ public class GestioEquips extends javax.swing.JFrame {
     }//GEN-LAST:event_btnEsborrarActionPerformed
 
     private void comboTemporadaItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_comboTemporadaItemStateChanged
-       tempEscollida=(Temporada) comboTemporada.getSelectedItem();
+        tempEscollida = (Temporada) comboTemporada.getSelectedItem();
         cercarEquips();
     }//GEN-LAST:event_comboTemporadaItemStateChanged
 

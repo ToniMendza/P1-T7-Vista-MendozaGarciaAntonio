@@ -1,3 +1,5 @@
+package org.milaifontanals.clubEsportiu.vista;
+
 
 import java.awt.Font;
 import java.awt.font.TextAttribute;
