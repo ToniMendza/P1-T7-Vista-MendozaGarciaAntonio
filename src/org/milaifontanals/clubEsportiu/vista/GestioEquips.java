@@ -322,9 +322,9 @@ public class GestioEquips extends javax.swing.JFrame {
                             Equip e = null;
                 try {
                     e = capaOracleJDBC.obtenirEquipPerId(idEquip);
-                    FitxaEquip f_FitxaEquip=new FitxaEquip(capaOracleJDBC,e);
+                    FitxaEquip f_FitxaEquip=new FitxaEquip(capaOracleJDBC,e,this);
                     f_FitxaEquip.setVisible(true);
-                    this.dispose();
+                    this.setVisible(false);
                 } catch (GestorBDClubEsportiuException ex) {
                     Logger.getLogger(GestioEquips.class.getName()).log(Level.SEVERE, null, ex);
                     JOptionPane.showMessageDialog(this, "Error en eliminar l'equip. Si us plau, prova més tard.", "Error d'eliminació", JOptionPane.ERROR_MESSAGE);

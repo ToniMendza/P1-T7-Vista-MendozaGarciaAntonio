@@ -398,6 +398,7 @@ public class FinestraLogin extends javax.swing.JFrame {
                         .anyMatch(t -> t.getAny_temp() == temp);
                 if (!exists) {
                     capaOracleJDBC.afegirTemporada(new Temporada(temp));
+                    capaOracleJDBC.confirmarCanvis();
                     JOptionPane.showMessageDialog(this, "Temporada afegida correctament.", "Éxit", JOptionPane.INFORMATION_MESSAGE);
                 } else {
                     JOptionPane.showMessageDialog(this, "Error. Aquesta temporada ja existeix", "Error", JOptionPane.ERROR_MESSAGE);

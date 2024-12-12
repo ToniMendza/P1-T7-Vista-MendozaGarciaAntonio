@@ -584,12 +584,12 @@ public class GestioJugadors extends javax.swing.JFrame {
                 }
             } else {
                 lblesborrar.setVisible(true);
-                System.out.println("No se ha seleccionado ninguna fila.");
+                System.out.println("No has seleccionado ninguna fila.");
 
             }
         } catch (ClassCastException | ArrayIndexOutOfBoundsException e) {
 
-            System.out.println("Error al recuperar el ID: " + e.getMessage());
+            System.out.println("Error al recuperar l'ID: " + e.getMessage());
         }
     }//GEN-LAST:event_btnEsborrarActionPerformed
 

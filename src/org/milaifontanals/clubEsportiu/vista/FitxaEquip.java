@@ -2,6 +2,7 @@ package org.milaifontanals.clubEsportiu.vista;
 
 import java.awt.Font;
 import java.awt.font.TextAttribute;
+import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -11,9 +12,12 @@ import javax.swing.JOptionPane;
 import javax.swing.ListSelectionModel;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
+import javax.swing.table.TableModel;
 import org.milaifontanals.clubEsportiu.model.Categoria;
 import org.milaifontanals.clubEsportiu.model.Equip;
+import org.milaifontanals.clubEsportiu.model.ExceptionClub;
 import org.milaifontanals.clubEsportiu.model.Jugador;
+import org.milaifontanals.clubEsportiu.model.Membre;
 import org.milaifontanals.clubEsportiu.persistencia.GestorBDClubEsportiuException;
 import org.milaifontanals.clubEsportiu.persistencia.IGestorBDClubEsportiu;
 
@@ -30,17 +34,19 @@ public class FitxaEquip extends javax.swing.JFrame {
     private IGestorBDClubEsportiu capaOracleJDBC = null;
     private Equip equip = null;
     private int idJugador;
+    private Jugador jugadorNou;
     private List<Jugador> jugadoresEquipo;
     private List<Jugador> jugadorsDisponibles;
+    private GestioEquips fGestioEquips;
 
     /**
      * Creates new form GestioPlantilla
      */
-    public FitxaEquip(IGestorBDClubEsportiu capa, Equip e) {
+    public FitxaEquip(IGestorBDClubEsportiu capa, Equip e, GestioEquips f) {
         initComponents();
         this.capaOracleJDBC = capa;
         this.equip = e;
-
+        this.fGestioEquips = f;
         try {
             String titolEquip = e.getNom() + "-" + obtenirTipus(e.getTipus()) + "-" + capaOracleJDBC.obtenirNomCategoriaPerId(e.getIdCategoria());
             lblCatNom.setText(titolEquip);
@@ -49,21 +55,30 @@ public class FitxaEquip extends javax.swing.JFrame {
         }
 
         try {
-            cargarJugadores();
-            TableColumn idColumn = tbJugEquip.getColumnModel().getColumn(3);
-            tbJugEquip.removeColumn(idColumn);
-            tbJugEquip.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+            carregarDadesJugadorsEquip();
+            carregarDadesJugadorsSenseEquip();
         } catch (GestorBDClubEsportiuException ex) {
             Logger.getLogger(FitxaEquip.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
-    private void cargarJugadores() throws GestorBDClubEsportiuException {
-        List<Jugador> jugadores = capaOracleJDBC.obtenirJugadorsPerIdEquip(this.equip.getId());
-        omplirTaula(jugadores);
+    private void carregarDadesJugadorsSenseEquip() throws GestorBDClubEsportiuException {
+        jugadorsDisponibles = capaOracleJDBC.obtenirJugadorsDisponibles(this.equip.getId(), this.equip.getIdAny());
+        omplirTaulaJugadorsSenseEquip(jugadorsDisponibles);
+        TableColumn idColumn = tbJugDisponible.getColumnModel().getColumn(3);
+        tbJugDisponible.removeColumn(idColumn);
+        tbJugDisponible.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
     }
 
-    public void omplirTaula(List<Jugador> jugadors) {
+    private void carregarDadesJugadorsEquip() throws GestorBDClubEsportiuException {
+        jugadoresEquipo = capaOracleJDBC.obtenirJugadorsPerIdEquip(this.equip.getId());
+        omplirTaula(jugadoresEquipo);
+        TableColumn idColumn = tbJugEquip.getColumnModel().getColumn(3);
+        tbJugEquip.removeColumn(idColumn);
+        tbJugEquip.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+    }
+
+    private void omplirTaula(List<Jugador> jugadors) {
         DefaultTableModel model = (DefaultTableModel) tbJugEquip.getModel();
 
         model.setRowCount(0);
@@ -81,13 +96,45 @@ public class FitxaEquip extends javax.swing.JFrame {
                 int selectedRow = tbJugEquip.getSelectedRow();
                 if (selectedRow != -1) {
                     int modelRow = tbJugEquip.convertRowIndexToModel(selectedRow);
-                    Object idValue = ((DefaultTableModel) tbJugEquip.getModel()).getValueAt(modelRow, 4);
+                    Object idValue = ((DefaultTableModel) tbJugEquip.getModel()).getValueAt(modelRow, 3);
 
                     idJugador = Integer.parseInt(idValue.toString());
                     System.out.println("ID seleccionat: " + idJugador);
                 }
             }
         });
+    }
+//    private int jugadorIdEquipActual(){
+//
+//    }
+
+    private void omplirTaulaJugadorsSenseEquip(List<Jugador> jugadors) {
+        DefaultTableModel model = (DefaultTableModel) tbJugDisponible.getModel();
+
+        model.setRowCount(0);
+
+        for (Jugador j : jugadors) {
+            model.addRow(new Object[]{
+                j.getIdLegal(),
+                j.getNom(),
+                j.getNomCategoria(),
+                j // Guardar el objeto completo
+            });
+        }
+    }
+
+    private Jugador obtenirJugadorNou() {
+        int selectedRow = tbJugDisponible.getSelectedRow();
+        if (selectedRow != -1) {
+            int modelRow = tbJugDisponible.convertRowIndexToModel(selectedRow);
+            Object jugadorObject = ((DefaultTableModel) tbJugDisponible.getModel()).getValueAt(modelRow, 3);
+
+            if (jugadorObject instanceof Jugador) {
+                return (Jugador) jugadorObject;
+            }
+        }
+        System.out.println("Cap jugador seleccionat.");
+        return null;
     }
 
     private String obtenirTipus(Character tipus) {
@@ -120,7 +167,7 @@ public class FitxaEquip extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         tbJugEquip = new javax.swing.JTable();
         jScrollPane2 = new javax.swing.JScrollPane();
-        tbJugadorsGeneral = new javax.swing.JTable();
+        tbJugDisponible = new javax.swing.JTable();
         tornarEnrere = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         lblCatNom = new javax.swing.JLabel();
@@ -137,7 +184,7 @@ public class FitxaEquip extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Gestió Plantilla");
-        setPreferredSize(new java.awt.Dimension(820, 420));
+        setPreferredSize(new java.awt.Dimension(820, 480));
 
         tbJugEquip.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -152,7 +199,7 @@ public class FitxaEquip extends javax.swing.JFrame {
         ));
         jScrollPane1.setViewportView(tbJugEquip);
 
-        tbJugadorsGeneral.setModel(new javax.swing.table.DefaultTableModel(
+        tbJugDisponible.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -160,10 +207,10 @@ public class FitxaEquip extends javax.swing.JFrame {
                 {null, null, null, null}
             },
             new String [] {
-                "NIF", "Nom", "Title 3", "ID"
+                "NIF", "Nom", "Categoria", "ID"
             }
         ));
-        jScrollPane2.setViewportView(tbJugadorsGeneral);
+        jScrollPane2.setViewportView(tbJugDisponible);
 
         tornarEnrere.setForeground(new java.awt.Color(0, 153, 255));
         tornarEnrere.setText("Tornar Enrere");
@@ -198,6 +245,11 @@ public class FitxaEquip extends javax.swing.JFrame {
         });
 
         btnEsborrar.setText("<-Esborrar");
+        btnEsborrar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEsborrarActionPerformed(evt);
+            }
+        });
 
         jLabel5.setText("Nom:");
 
@@ -309,18 +361,64 @@ public class FitxaEquip extends javax.swing.JFrame {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void tornarEnrereMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tornarEnrereMouseClicked
-//        GestioJugadors log = new GestioJugadors(capaOracleJDBC, temp);
-//        log.setVisible(true);
-//        this.dispose();
+        this.fGestioEquips.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_tornarEnrereMouseClicked
 
     private void btnAfegeixActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAfegeixActionPerformed
-        // TODO add your handling code here:
+        Jugador j = obtenirJugadorNou();
+        Membre membresEquip;
+        if (j == null) {
+            JOptionPane.showMessageDialog(this, "No has seleccionat cap jugador per afegir l'equip",
+                    "Error de selecció de jugadors", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        if (j.getSexe() != equip.getTipus() && equip.getTipus() != 'M') {
+            JOptionPane.showMessageDialog(this, "No hi ha concordança del sexe del jugador amb la categoria",
+                    "Error verifica la concordança del sexe", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        try {
+            //Esto podria mejorarse
+            Categoria cat=capaOracleJDBC.obtenirCategoriaPerId(equip.getIdCategoria());
+            if(!validaCategoriaJugador(cat, j.getDataNaixement())){
+                            JOptionPane.showMessageDialog(this, "L'equip seleccionats sempre ha de ser de la mateixa categoria que el jugador o alternativament una superior",
+                    "Error categoria jugador", JOptionPane.ERROR_MESSAGE);
+            return;
+            }
+            membresEquip=new Membre("TITULAR", equip.getId(),j.getId());
+            capaOracleJDBC.afegirMembre(membresEquip);
+            capaOracleJDBC.confirmarCanvis();
+            JOptionPane.showMessageDialog(null, "Jugador introduit correctament");
+            carregarDadesJugadorsEquip();
+            carregarDadesJugadorsSenseEquip();
+        } catch (GestorBDClubEsportiuException ex) {
+            Logger.getLogger(FitxaEquip.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ExceptionClub ex) {
+            Logger.getLogger(FitxaEquip.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
     }//GEN-LAST:event_btnAfegeixActionPerformed
+    private boolean validaCategoriaJugador(Categoria cat,LocalDate jData){
+    int edatJugador = equip.getIdAny() - jData.getYear();
+    
+    if (edatJugador >= cat.getEdatMin() && edatJugador <= cat.getEdatMax()) {
+        return true; 
+    }
+    
 
+    if (edatJugador < cat.getEdatMin()) {
+        return true; 
+    }
+    
+    
+    return false;
+        
+    }
     private void txtNomActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNomActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtNomActionPerformed
@@ -328,6 +426,16 @@ public class FitxaEquip extends javax.swing.JFrame {
     private void comboCategoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboCategoriaActionPerformed
 
     }//GEN-LAST:event_comboCategoriaActionPerformed
+
+    private void btnEsborrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEsborrarActionPerformed
+                Jugador j = obtenirJugadorNou();
+        Membre membresEquip;
+        if (j == null) {
+            JOptionPane.showMessageDialog(this, "No has seleccionat cap jugador per afegir l'equip",
+                    "Error de selecció de jugadors", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+    }//GEN-LAST:event_btnEsborrarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -376,9 +484,9 @@ public class FitxaEquip extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JLabel lblCatNom;
+    private javax.swing.JTable tbJugDisponible;
     private javax.swing.JTable tbJugEquip;
     private javax.swing.JLabel tbJugadorsEquip;
-    private javax.swing.JTable tbJugadorsGeneral;
     private javax.swing.JLabel tornarEnrere;
     private javax.swing.JTextField txtNif;
     private javax.swing.JTextField txtNom;
@@ -396,7 +504,6 @@ public class FitxaEquip extends javax.swing.JFrame {
 ////        
 ////        List<Jugador> jugadores = capaOracleJDBC.obtenirJugadorsNoIdEquip(this.equip.getId());
 //    }
-
 //    public void omplirTaula(List<Jugador> jugadors) {
 //        DefaultTableModel model = (DefaultTableModel) tbJugEquip.getModel();
 //
