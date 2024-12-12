@@ -203,13 +203,11 @@ public class Login extends javax.swing.JFrame {
     private void btneEnviarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btneEnviarActionPerformed
          Usuari usu = null;
     
-    // Validar si los campos están vacíos
     if (txtUsuari.getText().isEmpty() || txtContrasenya.getText().isEmpty()) {
         JOptionPane.showMessageDialog(this, "Error. El nom o la contrasenya estan buits", "Error", JOptionPane.ERROR_MESSAGE);
     return;
     } else {
              try {
-                 // Intentar obtener el usuario de la base de datos
                  usu = capaOracleJDBC.obtenirUsuari(txtUsuari.getText().trim(), txtContrasenya.getText().trim());
              } catch (GestorBDClubEsportiuException ex) {
                  Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);

@@ -65,48 +65,57 @@ public class FitxaEquip extends javax.swing.JFrame {
     private void carregarDadesJugadorsSenseEquip() throws GestorBDClubEsportiuException {
         jugadorsDisponibles = capaOracleJDBC.obtenirJugadorsDisponibles(this.equip.getId(), this.equip.getIdAny());
         omplirTaulaJugadorsSenseEquip(jugadorsDisponibles);
-        TableColumn idColumn = tbJugDisponible.getColumnModel().getColumn(3);
-        tbJugDisponible.removeColumn(idColumn);
+
+        // Verificar que la columna 3 aún existe antes de intentar eliminarla
+        if (tbJugDisponible.getColumnModel().getColumnCount() > 3) {
+            TableColumn idColumn = tbJugDisponible.getColumnModel().getColumn(3);
+            tbJugDisponible.removeColumn(idColumn);
+        }
+
         tbJugDisponible.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
     }
 
     private void carregarDadesJugadorsEquip() throws GestorBDClubEsportiuException {
         jugadoresEquipo = capaOracleJDBC.obtenirJugadorsPerIdEquip(this.equip.getId());
         omplirTaula(jugadoresEquipo);
-        TableColumn idColumn = tbJugEquip.getColumnModel().getColumn(3);
-        tbJugEquip.removeColumn(idColumn);
+
+        // Verifica si la columna ya ha sido eliminada antes de intentarlo nuevamente
+        if (tbJugEquip.getColumnModel().getColumnCount() > 3) {
+            TableColumn idColumn = tbJugEquip.getColumnModel().getColumn(3);
+            tbJugEquip.removeColumn(idColumn);
+        }
+
         tbJugEquip.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
     }
 
     private void omplirTaula(List<Jugador> jugadors) {
         DefaultTableModel model = (DefaultTableModel) tbJugEquip.getModel();
 
-        model.setRowCount(0);
+        model.setRowCount(0); // Limpiar la tabla
 
         for (Jugador j : jugadors) {
             model.addRow(new Object[]{
                 j.getIdLegal(),
                 j.getNom(),
-                j.getTitularitat(),
-                j.getId()
+                j.getTitularitat().trim(),
+                j // Guardar el objeto completo
             });
         }
-        tbJugEquip.getSelectionModel().addListSelectionListener(event -> {
-            if (!event.getValueIsAdjusting()) {
-                int selectedRow = tbJugEquip.getSelectedRow();
-                if (selectedRow != -1) {
-                    int modelRow = tbJugEquip.convertRowIndexToModel(selectedRow);
-                    Object idValue = ((DefaultTableModel) tbJugEquip.getModel()).getValueAt(modelRow, 3);
-
-                    idJugador = Integer.parseInt(idValue.toString());
-                    System.out.println("ID seleccionat: " + idJugador);
-                }
-            }
-        });
     }
-//    private int jugadorIdEquipActual(){
-//
-//    }
+
+    private Jugador obtenirJugadorEquipActual() {
+        int selectedRow = tbJugEquip.getSelectedRow();
+        if (selectedRow != -1) {
+            int modelRow = tbJugEquip.convertRowIndexToModel(selectedRow);
+            Object jugadorObject = ((DefaultTableModel) tbJugEquip.getModel()).getValueAt(modelRow, 3);
+
+            if (jugadorObject instanceof Jugador) {
+                return (Jugador) jugadorObject;
+            }
+        }
+        System.out.println("Cap jugador seleccionat.");
+        return null;
+    }
 
     private void omplirTaulaJugadorsSenseEquip(List<Jugador> jugadors) {
         DefaultTableModel model = (DefaultTableModel) tbJugDisponible.getModel();
@@ -384,16 +393,16 @@ public class FitxaEquip extends javax.swing.JFrame {
         }
         try {
             //Esto podria mejorarse
-            Categoria cat=capaOracleJDBC.obtenirCategoriaPerId(equip.getIdCategoria());
-            if(!validaCategoriaJugador(cat, j.getDataNaixement())){
-                            JOptionPane.showMessageDialog(this, "L'equip seleccionats sempre ha de ser de la mateixa categoria que el jugador o alternativament una superior",
-                    "Error categoria jugador", JOptionPane.ERROR_MESSAGE);
-            return;
+            Categoria cat = capaOracleJDBC.obtenirCategoriaPerId(equip.getIdCategoria());
+            if (!validaCategoriaJugador(cat, j.getDataNaixement())) {
+                JOptionPane.showMessageDialog(this, "L'equip seleccionats sempre ha de ser de la mateixa categoria que el jugador o alternativament una superior",
+                        "Error categoria jugador", JOptionPane.ERROR_MESSAGE);
+                return;
             }
-            membresEquip=new Membre("TITULAR", equip.getId(),j.getId());
+            membresEquip = new Membre("TITULAR", equip.getId(), j.getId());
             capaOracleJDBC.afegirMembre(membresEquip);
             capaOracleJDBC.confirmarCanvis();
-            JOptionPane.showMessageDialog(null, "Jugador introduit correctament");
+            JOptionPane.showMessageDialog(null, "El jugador s'ha incorporat a l'equip correctament.");
             carregarDadesJugadorsEquip();
             carregarDadesJugadorsSenseEquip();
         } catch (GestorBDClubEsportiuException ex) {
@@ -401,23 +410,21 @@ public class FitxaEquip extends javax.swing.JFrame {
         } catch (ExceptionClub ex) {
             Logger.getLogger(FitxaEquip.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
-    }//GEN-LAST:event_btnAfegeixActionPerformed
-    private boolean validaCategoriaJugador(Categoria cat,LocalDate jData){
-    int edatJugador = equip.getIdAny() - jData.getYear();
-    
-    if (edatJugador >= cat.getEdatMin() && edatJugador <= cat.getEdatMax()) {
-        return true; 
-    }
-    
 
-    if (edatJugador < cat.getEdatMin()) {
-        return true; 
-    }
-    
-    
-    return false;
-        
+    }//GEN-LAST:event_btnAfegeixActionPerformed
+    private boolean validaCategoriaJugador(Categoria cat, LocalDate jData) {
+        int edatJugador = equip.getIdAny() - jData.getYear();
+
+        if (edatJugador >= cat.getEdatMin() && edatJugador <= cat.getEdatMax()) {
+            return true;
+        }
+
+        if (edatJugador < cat.getEdatMin()) {
+            return true;
+        }
+
+        return false;
+
     }
     private void txtNomActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNomActionPerformed
         // TODO add your handling code here:
@@ -428,13 +435,25 @@ public class FitxaEquip extends javax.swing.JFrame {
     }//GEN-LAST:event_comboCategoriaActionPerformed
 
     private void btnEsborrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEsborrarActionPerformed
-                Jugador j = obtenirJugadorNou();
-        Membre membresEquip;
+        Jugador j = obtenirJugadorEquipActual();
+        Membre mEquip;
         if (j == null) {
             JOptionPane.showMessageDialog(this, "No has seleccionat cap jugador per afegir l'equip",
                     "Error de selecció de jugadors", JOptionPane.ERROR_MESSAGE);
             return;
         }
+        try {
+            mEquip = capaOracleJDBC.obtenirUnMembre(equip.getId(), j.getId());
+            capaOracleJDBC.eliminarMembre(mEquip);
+            capaOracleJDBC.confirmarCanvis();
+            JOptionPane.showMessageDialog(null, "Jugador eliminat del equip correctament.");
+            carregarDadesJugadorsEquip();
+            carregarDadesJugadorsSenseEquip();
+        } catch (GestorBDClubEsportiuException ex) {
+            Logger.getLogger(FitxaEquip.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+
     }//GEN-LAST:event_btnEsborrarActionPerformed
 
     /**
