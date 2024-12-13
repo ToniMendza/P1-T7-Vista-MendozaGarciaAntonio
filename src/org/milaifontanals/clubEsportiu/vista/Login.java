@@ -64,7 +64,7 @@ public class Login extends javax.swing.JFrame {
         btneEnviar = new javax.swing.JButton();
         lblRecuperaCOntrasenya = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
-        lblInici1 = new javax.swing.JLabel();
+        lblLogo = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("INICI DE SESSIÓ");
@@ -146,29 +146,29 @@ public class Login extends javax.swing.JFrame {
                 .addComponent(btneEnviar)
                 .addGap(26, 26, 26)
                 .addComponent(lblRecuperaCOntrasenya)
-                .addContainerGap(70, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jPanel2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 3));
 
-        lblInici1.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        lblInici1.setText("IMATGE EQUIP");
+        lblLogo.setIcon(new javax.swing.ImageIcon("C:\\Users\\isard\\Desktop\\FOTOS-bd\\7517242-Red.jpg")); // NOI18N
+        lblLogo.setMaximumSize(new java.awt.Dimension(2000, 2000));
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(89, 89, 89)
-                .addComponent(lblInici1)
-                .addContainerGap(108, Short.MAX_VALUE))
+                .addContainerGap()
+                .addComponent(lblLogo, javax.swing.GroupLayout.DEFAULT_SIZE, 352, Short.MAX_VALUE)
+                .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(lblInici1)
-                .addContainerGap(284, Short.MAX_VALUE))
+                .addComponent(lblLogo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -284,7 +284,7 @@ try {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JLabel lblConstrasenya;
     private javax.swing.JLabel lblInici;
-    private javax.swing.JLabel lblInici1;
+    private javax.swing.JLabel lblLogo;
     private javax.swing.JLabel lblRecuperaCOntrasenya;
     private javax.swing.JLabel lblUsuari;
     private javax.swing.JTextField txtContrasenya;

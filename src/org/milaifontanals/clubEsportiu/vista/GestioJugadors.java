@@ -50,16 +50,18 @@ public class GestioJugadors extends javax.swing.JFrame {
     private List<Jugador> jugadors;
     private static final int ID_JUGADOR_INDEX = 5;
     private Temporada temp;
+    private FinestraLogin flogin;
 
     /**
      * Creates new form GestioJugadors
      */
-    public GestioJugadors(IGestorBDClubEsportiu capa, Temporada temporada) {
+    public GestioJugadors(IGestorBDClubEsportiu capa, Temporada temporada, FinestraLogin f) {
         try {
             initComponents();
 
             this.capaOracleJDBC = capa;
             this.temp = temporada;
+            this.flogin=f;
             lblFormat.setVisible(false);
             lblFormatNif.setVisible(false);
             lblInserir.setVisible(false);
@@ -131,7 +133,7 @@ public class GestioJugadors extends javax.swing.JFrame {
         lblFormat = new javax.swing.JLabel();
         lblFormatNif = new javax.swing.JLabel();
         lblInserir = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
+        btnInserir = new javax.swing.JButton();
         btnEsborrar = new javax.swing.JButton();
         lblInserir1 = new javax.swing.JLabel();
         lblesborrar = new javax.swing.JLabel();
@@ -209,24 +211,24 @@ public class GestioJugadors extends javax.swing.JFrame {
         tableJugador.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         tableJugador.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null}
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null}
             },
             new String [] {
-                "Nom", "Sexe", "Data Naixement", "NIF", "Categoria", "ID", ""
+                "Nom", "Sexe", "Data Naixement", "NIF", "Categoria", "ID"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, true
+                false, false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -264,10 +266,10 @@ public class GestioJugadors extends javax.swing.JFrame {
         lblInserir.setForeground(new java.awt.Color(255, 0, 51));
         lblInserir.setText("Escull Un Jugador");
 
-        jButton1.setText("Inserir");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        btnInserir.setText("Inserir");
+        btnInserir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                btnInserirActionPerformed(evt);
             }
         });
 
@@ -307,7 +309,7 @@ public class GestioJugadors extends javax.swing.JFrame {
                                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                                             .addComponent(btnEsborrar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                            .addComponent(jButton1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                            .addComponent(btnInserir, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                             .addComponent(btnModificar, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -394,7 +396,7 @@ public class GestioJugadors extends javax.swing.JFrame {
                                     .addComponent(lblFormatNif))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)))
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jButton1)
+                            .addComponent(btnInserir)
                             .addComponent(comboCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel3)
                             .addComponent(btnCercar))))
@@ -417,8 +419,7 @@ public class GestioJugadors extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void tornarEnrereMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tornarEnrereMouseClicked
-        FinestraLogin log = new FinestraLogin(capaOracleJDBC);
-        log.setVisible(true);
+        this.flogin.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_tornarEnrereMouseClicked
 
@@ -450,7 +451,7 @@ public class GestioJugadors extends javax.swing.JFrame {
             // Recuperar el ID desde el modelo (columna 5 en este caso)
             int id = obtenirIDJugador();
             if (id != -1) {
-                InserirModificarJugador log = new InserirModificarJugador(id, capaOracleJDBC, temp);
+                InserirModificarJugador log = new InserirModificarJugador(id, capaOracleJDBC, temp,flogin);
                 log.setVisible(true);
                 this.dispose();
                 System.out.println("Jugador seleccionado: " + id);
@@ -496,6 +497,8 @@ public class GestioJugadors extends javax.swing.JFrame {
         String nif = null;
         int ordreJugadors;
 
+        lblFormat.setVisible(false);
+        lblFormatNif.setVisible(false);
         if (categoriaSeleccionada != null) {
             idCategoria = categoriaSeleccionada.getId();
 
@@ -504,7 +507,6 @@ public class GestioJugadors extends javax.swing.JFrame {
             LocalDate validaData = null;
             try {
                 validaData = capaOracleJDBC.validarData(txtNaixement.getText().trim());
-                lblFormat.setVisible(false);
             } catch (GestorBDClubEsportiuException ex) {
                 Logger.getLogger(GestioJugadors.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -513,18 +515,10 @@ public class GestioJugadors extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(this, "La data introduïda no és vàlida. Format esperat: dd/MM/yyyy",
                         "Error de data", JOptionPane.ERROR_MESSAGE);
                 lblFormat.setVisible(true);
-                return; // Salir del método porque la fecha es inválida
+                return; 
             }
             data = validaData;
 
-//            if (validaData == null) {
-//                JOptionPane.showMessageDialog(this, "La data introduïda no és vàlida. Format esperat: dd/MM/yyyy",
-//                        "Error de data", JOptionPane.ERROR_MESSAGE);
-//                lblFormat.setVisible(true);
-//                return; // Salir del método porque la fecha es inválida
-//            }
-//            
-//            data = validaData;
         }
         if (!txtNom.getText().isEmpty()) {
             nomEquip = txtNom.getText().trim();
@@ -532,7 +526,6 @@ public class GestioJugadors extends javax.swing.JFrame {
         if (!txtNif.getText().isEmpty()) {
             if (txtNif.getText().trim().matches("^\\d{8}[A-Za-z]$")) {
                 nif = txtNif.getText().trim();
-                lblFormatNif.setVisible(false);
             } else {
                 lblFormatNif.setVisible(true);
                 return;
@@ -546,8 +539,6 @@ public class GestioJugadors extends javax.swing.JFrame {
 
             omplirTaula(jugadors);
 
-//            System.out.println(jugadors.toString());
-//            System.out.println(data);
             btnModificar.setEnabled(true);
             btnEsborrar.setEnabled(true);
         } catch (GestorBDClubEsportiuException ex) {
@@ -556,12 +547,12 @@ public class GestioJugadors extends javax.swing.JFrame {
 
     }//GEN-LAST:event_btnCercarActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void btnInserirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInserirActionPerformed
         int jugador = 0;
-        InserirModificarJugador log = new InserirModificarJugador(jugador, capaOracleJDBC, temp);
+        InserirModificarJugador log = new InserirModificarJugador(jugador, capaOracleJDBC, temp,flogin);
         log.setVisible(true);
         this.dispose();
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_btnInserirActionPerformed
 
     private void btnEsborrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEsborrarActionPerformed
         try {
@@ -573,7 +564,8 @@ public class GestioJugadors extends javax.swing.JFrame {
                     if (capaOracleJDBC.jugadorSenseEquip(jugadorDel)) {
                         capaOracleJDBC.eliminarJugador(jugadorDel);
                         JOptionPane.showMessageDialog(null, "Jugador eliminat correctament");
-                        //            capaOracleJDBC.confirmarCanvis();
+                        capaOracleJDBC.confirmarCanvis();
+                        omplirTaula(jugadors);
                     } else {
                         JOptionPane.showMessageDialog(null, "Aquest jugador pertany a un equip, no és pot esborrar: ", "Error", JOptionPane.ERROR_MESSAGE);
                         return;
@@ -642,10 +634,10 @@ public class GestioJugadors extends javax.swing.JFrame {
     private javax.swing.JButton btnCercar;
     private javax.swing.JButton btnEsborrar;
     private javax.swing.JButton btnExportar;
+    private javax.swing.JButton btnInserir;
     private javax.swing.JButton btnModificar;
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JComboBox<Categoria > comboCategoria;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

@@ -46,7 +46,7 @@
                                   <Group type="102" alignment="1" attributes="0">
                                       <Group type="103" groupAlignment="1" max="-2" attributes="0">
                                           <Component id="btnEsborrar" max="32767" attributes="0"/>
-                                          <Component id="jButton1" alignment="0" max="32767" attributes="0"/>
+                                          <Component id="btnInserir" alignment="0" max="32767" attributes="0"/>
                                           <Component id="btnModificar" alignment="0" max="32767" attributes="0"/>
                                       </Group>
                                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
@@ -166,7 +166,7 @@
                           </Group>
                       </Group>
                       <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="jButton1" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="btnInserir" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="comboCategoria" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="jLabel3" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="btnCercar" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -310,14 +310,13 @@
               </Border>
             </Property>
             <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
-              <Table columnCount="7" rowCount="11">
+              <Table columnCount="6" rowCount="11">
                 <Column editable="false" title="Nom" type="java.lang.Object"/>
                 <Column editable="false" title="Sexe" type="java.lang.Object"/>
                 <Column editable="false" title="Data Naixement" type="java.lang.Object"/>
                 <Column editable="false" title="NIF" type="java.lang.Object"/>
                 <Column editable="false" title="Categoria" type="java.lang.Object"/>
                 <Column editable="false" title="ID" type="java.lang.Object"/>
-                <Column editable="true" title="" type="java.lang.Object"/>
               </Table>
             </Property>
           </Properties>
@@ -387,12 +386,12 @@
         <Property name="text" type="java.lang.String" value="Escull Un Jugador"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JButton" name="jButton1">
+    <Component class="javax.swing.JButton" name="btnInserir">
       <Properties>
         <Property name="text" type="java.lang.String" value="Inserir"/>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton1ActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnInserirActionPerformed"/>
       </Events>
     </Component>
     <Component class="javax.swing.JButton" name="btnEsborrar">

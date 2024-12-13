@@ -1,6 +1,5 @@
 package org.milaifontanals.clubEsportiu.vista;
 
-
 import java.awt.Font;
 import java.awt.font.TextAttribute;
 import java.util.HashMap;
@@ -10,7 +9,6 @@ import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
-//import org.milaifontanals.clubEsportiu.jdbc.GestorBDClubEsportiuJdbc;
 import org.milaifontanals.clubEsportiu.model.Temporada;
 import org.milaifontanals.clubEsportiu.model.Usuari;
 import org.milaifontanals.clubEsportiu.persistencia.GestorBDClubEsportiuException;
@@ -28,7 +26,6 @@ import org.milaifontanals.clubEsportiu.persistencia.IGestorBDClubEsportiu;
 public class FinestraLogin extends javax.swing.JFrame {
 
     private IGestorBDClubEsportiu capaOracleJDBC = null;
-//    private GestorBDClubEsportiuJdbc capaOracleJDBC=null;
     private Usuari usu = null;
 
     /**
@@ -48,26 +45,17 @@ public class FinestraLogin extends javax.swing.JFrame {
      */
     public FinestraLogin(Usuari usu1, IGestorBDClubEsportiu capa) {
         initComponents();
-        // Guardamos el objeto Usuari recibido
         this.usu = usu1;
         this.capaOracleJDBC = capa;
         lblInserirTemp.setVisible(false);
 
         try {
-            // Crear conexión a la base de datos (si es necesario)
-//            capaOracleJDBC = new GestorBDClubEsportiuJdbc();
 
             // Configurar los elementos de la interfaz con los datos del usuario
             lblLogin.setText(usu.getLogin());
             lblNom.setText(usu.getNom());
 //            comboTemporada.addItem(new Equip(""));
-            tmp = capaOracleJDBC.obtenirTemporades();
-            for (Iterator<Temporada> iterator = tmp.iterator(); iterator.hasNext();) {
-                Temporada next = iterator.next();
-                comboTemporada.addItem(next);
-
-            }
-
+            carregarTemporades();
             System.out.println("Connexió establerta");
         } catch (GestorBDClubEsportiuException ex) {
             Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
@@ -76,8 +64,19 @@ public class FinestraLogin extends javax.swing.JFrame {
         // Inicializar los componentes gráficos
     }
 
+    private void carregarTemporades() throws GestorBDClubEsportiuException {
+        comboTemporada.removeAllItems();
+        tmp = capaOracleJDBC.obtenirTemporades();
+        for (Iterator<Temporada> iterator = tmp.iterator(); iterator.hasNext();) {
+            Temporada next = iterator.next();
+            comboTemporada.addItem(next);
+
+        }
+
+    }
+
     public FinestraLogin(IGestorBDClubEsportiu capa) {
-        this.capaOracleJDBC=capa;
+        this.capaOracleJDBC = capa;
         initComponents();
     }
 
@@ -366,17 +365,17 @@ public class FinestraLogin extends javax.swing.JFrame {
     }//GEN-LAST:event_comboTemporadaActionPerformed
 
     private void btnEquipsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEquipsActionPerformed
-        Temporada temporada=(Temporada) comboTemporada.getSelectedItem();
+        Temporada temporada = (Temporada) comboTemporada.getSelectedItem();
         GestioEquips fGestioEquips = new GestioEquips(capaOracleJDBC, temporada);
         fGestioEquips.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnEquipsActionPerformed
 
     private void btnJugadorsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnJugadorsActionPerformed
-        Temporada temporada=(Temporada) comboTemporada.getSelectedItem();
-        GestioJugadors fGestioJugador = new GestioJugadors(capaOracleJDBC,temporada);
-        fGestioJugador.setVisible(true);
-        this.dispose();
+        Temporada temporada = (Temporada) comboTemporada.getSelectedItem();
+        GestioJugadors fGestioJugador = new GestioJugadors(capaOracleJDBC, temporada,this);
+        fGestioJugador.setVisible(true);      
+        this.setVisible(false);
     }//GEN-LAST:event_btnJugadorsActionPerformed
 
     private void btnEsbTemporadaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEsbTemporadaActionPerformed
@@ -400,6 +399,7 @@ public class FinestraLogin extends javax.swing.JFrame {
                     capaOracleJDBC.afegirTemporada(new Temporada(temp));
                     capaOracleJDBC.confirmarCanvis();
                     JOptionPane.showMessageDialog(this, "Temporada afegida correctament.", "Éxit", JOptionPane.INFORMATION_MESSAGE);
+                    carregarTemporades();
                 } else {
                     JOptionPane.showMessageDialog(this, "Error. Aquesta temporada ja existeix", "Error", JOptionPane.ERROR_MESSAGE);
 

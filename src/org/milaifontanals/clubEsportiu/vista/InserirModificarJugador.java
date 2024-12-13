@@ -2,7 +2,10 @@ package org.milaifontanals.clubEsportiu.vista;
 
 
 import java.awt.Font;
+import java.awt.Image;
 import java.awt.font.TextAttribute;
+import java.awt.image.BufferedImage;
+import java.io.File;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.Date;
@@ -10,6 +13,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.ImageIcon;
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import org.milaifontanals.clubEsportiu.model.ExceptionClub;
 import org.milaifontanals.clubEsportiu.model.Jugador;
@@ -32,18 +37,23 @@ public class InserirModificarJugador extends javax.swing.JFrame {
     private Jugador jugador;
     private Jugador jugadorOriginal;
     private Temporada temp;
-
+    private FinestraLogin fLogin;
+    private String rutaFotoSeleccionada;
     /**
      * Creates new form IntroduirModificarJugador
      *
      * @param jugador
      * @param capa
      */
-    public InserirModificarJugador(int jugadorId, IGestorBDClubEsportiu capa,Temporada temp) {
+    
+
+            
+    public InserirModificarJugador(int jugadorId, IGestorBDClubEsportiu capa,Temporada temp, FinestraLogin f) {
         initComponents();
         this.jugadorId = jugadorId;
         this.capaOracleJDBC = capa;
         this.temp=temp;
+        this.fLogin=f;
         if (this.jugadorId != 0) {
             mostrarJugador();
         }else{
@@ -87,7 +97,6 @@ public class InserirModificarJugador extends javax.swing.JFrame {
         buttonGroup4 = new javax.swing.ButtonGroup();
         buttonGroup5 = new javax.swing.ButtonGroup();
         jLabel1 = new javax.swing.JLabel();
-        jPanel1 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
@@ -107,23 +116,14 @@ public class InserirModificarJugador extends javax.swing.JFrame {
         btnInserir = new javax.swing.JButton();
         txtNaix = new com.toedter.calendar.JDateChooser();
         tornarEnrere = new javax.swing.JLabel();
+        lblFoto = new javax.swing.JLabel();
+        btFoto = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Introduir/Modificar Jugador");
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         jLabel1.setText("Introdueix/Modifica les dades del jugador");
-
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 237, Short.MAX_VALUE)
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 133, Short.MAX_VALUE)
-        );
 
         jLabel2.setText("Nom: ");
 
@@ -140,6 +140,12 @@ public class InserirModificarJugador extends javax.swing.JFrame {
         txtNom.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtNomActionPerformed(evt);
+            }
+        });
+
+        txtIdLegal.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtIdLegalActionPerformed(evt);
             }
         });
 
@@ -178,6 +184,13 @@ public class InserirModificarJugador extends javax.swing.JFrame {
             }
         });
 
+        btFoto.setText("Upload Foto");
+        btFoto.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btFotoActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -193,28 +206,24 @@ public class InserirModificarJugador extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel2)
                             .addComponent(jLabel3)
-                            .addComponent(jLabel4)
                             .addComponent(jLabel5)
                             .addComponent(jLabel7)
                             .addComponent(jLabel6)
-                            .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel4))
                         .addGap(3, 3, 3)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(txtNom, javax.swing.GroupLayout.DEFAULT_SIZE, 276, Short.MAX_VALUE)
                             .addComponent(txtCognom)
-                            .addComponent(txtFiRevisio)
-                            .addComponent(txtIdLegal)
+                            .addComponent(txtFiRevisio, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(txtIdLegal, javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(txtIban)
                             .addComponent(txtAdreca)
-                            .addComponent(txtNaix, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                            .addComponent(txtNaix, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addComponent(tornarEnrere))
+                .addGap(103, 103, 103)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 110, Short.MAX_VALUE)
-                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(20, 20, 20))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(103, 103, 103)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(btnInserir)
                             .addGroup(layout.createSequentialGroup()
@@ -223,57 +232,63 @@ public class InserirModificarJugador extends javax.swing.JFrame {
                                 .addComponent(rbHome)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(rbDona)))
-                        .addGap(0, 0, Short.MAX_VALUE))))
+                        .addComponent(btFoto, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(lblFoto, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(41, 41, 41)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addComponent(jLabel1)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel1)
+                        .addGap(36, 36, 36)
+                        .addComponent(lblFoto, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(btFoto)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(rbHome)
+                            .addComponent(jLabel8)
+                            .addComponent(rbDona))
+                        .addGap(56, 56, 56))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(41, 41, 41)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel2)
+                            .addComponent(txtNom, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(41, 41, 41)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(jLabel2)
-                                    .addComponent(txtNom, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(jLabel3)
-                                    .addComponent(txtCognom, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(jLabel4)
-                                    .addComponent(txtFiRevisio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(jLabel5)
-                                    .addComponent(txtIdLegal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(jLabel7)
-                                    .addComponent(txtIban, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                        .addComponent(rbHome)
-                                        .addComponent(jLabel8)
-                                        .addComponent(rbDona))
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                        .addComponent(jLabel6)
-                                        .addComponent(txtAdreca, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(29, 29, 29)
-                                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(13, 13, 13)
-                        .addComponent(jLabel9))
-                    .addComponent(txtNaix, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(26, 26, 26)
+                            .addComponent(jLabel3)
+                            .addComponent(txtCognom, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel4)
+                            .addComponent(txtFiRevisio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(txtIdLegal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel5))
+                        .addGap(12, 12, 12)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel7)
+                            .addComponent(txtIban, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel6)
+                            .addComponent(txtAdreca, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addGap(6, 6, 6)
+                                .addComponent(jLabel9))
+                            .addComponent(txtNaix, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 39, Short.MAX_VALUE)))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(tornarEnrere, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnInserir))
-                .addContainerGap(58, Short.MAX_VALUE))
+                .addContainerGap(35, Short.MAX_VALUE))
         );
 
         pack();
@@ -297,7 +312,7 @@ public class InserirModificarJugador extends javax.swing.JFrame {
         java.util.Date date = txtNaix.getDate();
 
         if (nom.isEmpty() || cognom.isEmpty() || Revisio.isEmpty() || idLegal.isEmpty() || iban.isEmpty() || adreca.isEmpty() || date == null
-                || (rbDona.isSelected() == false && rbHome.isSelected() == false)) {
+                || (rbDona.isSelected() == false && rbHome.isSelected() == false) || lblFoto.getIcon() == null) {
             JOptionPane.showMessageDialog(null, "Tots els camps són obligatoris. Si us plau, ompliu-los tots.", "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
@@ -314,7 +329,8 @@ public class InserirModificarJugador extends javax.swing.JFrame {
             jugador.setAdreca(adreca);
             jugador.setIdLegal(idLegal);
             jugador.setDataNaixement(date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
-            jugador.setFoto("C:\\Users\\isard\\Desktop\\FOTOS-bd\\pexels-olly-846741.jpg");
+            System.out.println(rutaFotoSeleccionada);
+            jugador.setFoto(rutaFotoSeleccionada);
 
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(null, "Error en les dades del jugador: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
@@ -326,7 +342,7 @@ public class InserirModificarJugador extends javax.swing.JFrame {
             try {
                 capaOracleJDBC.afegirJugador(jugador);
 
-                //            capaOracleJDBC.confirmarCanvis();
+                capaOracleJDBC.confirmarCanvis();
                 JOptionPane.showMessageDialog(null, "Jugador inserit correctament");
             } catch (GestorBDClubEsportiuException ex) {
                 JOptionPane.showMessageDialog(null, "Error al insertar el jugador: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
@@ -336,6 +352,7 @@ public class InserirModificarJugador extends javax.swing.JFrame {
         } else {
             try {
                   // Modificar jugador
+                  //REVISAR
             boolean senseEquip = capaOracleJDBC.jugadorSenseEquip(jugador);
             boolean equipMix = capaOracleJDBC.jugadorEquipMix(jugador);
             boolean canviNaix = capaOracleJDBC.validaCanviNaixement(jugadorOriginal, jugador.getDataNaixement(),temp.getAny_temp());
@@ -364,10 +381,36 @@ public class InserirModificarJugador extends javax.swing.JFrame {
     }//GEN-LAST:event_rbHomeActionPerformed
 
     private void tornarEnrereMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tornarEnrereMouseClicked
-         GestioJugadors log = new GestioJugadors(capaOracleJDBC, temp);
+         GestioJugadors log = new GestioJugadors(capaOracleJDBC, temp,fLogin);
         log.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_tornarEnrereMouseClicked
+
+    private void txtIdLegalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtIdLegalActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtIdLegalActionPerformed
+
+    private void btFotoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btFotoActionPerformed
+                      
+    JFileChooser fc = new JFileChooser();
+    fc.setDialogTitle("Busca la foto del jugador");
+    fc.setCurrentDirectory(new File("C:\\Users\\isard\\Desktop\\FOTOS-bd")); // Cambia la ruta según sea necesario
+
+    if (fc.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
+        File selectedFile = fc.getSelectedFile();
+        rutaFotoSeleccionada = selectedFile.getAbsolutePath(); // Guardar la ruta completa
+        
+        // Ajustar la imagen seleccionada al tamaño del JLabel
+        ImageIcon iconoOriginal = new ImageIcon(rutaFotoSeleccionada);
+        Image imagenEscalada = iconoOriginal.getImage().getScaledInstance(
+                lblFoto.getWidth(),
+                lblFoto.getHeight(),
+                Image.SCALE_SMOOTH
+        );
+        lblFoto.setIcon(new ImageIcon(imagenEscalada)); // Mostrar la imagen ajustada
+    }
+
+    }//GEN-LAST:event_btFotoActionPerformed
 
 //    /**
 //     * @param args the command line arguments
@@ -406,6 +449,7 @@ public class InserirModificarJugador extends javax.swing.JFrame {
 //    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btFoto;
     private javax.swing.JButton btnInserir;
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.ButtonGroup buttonGroup2;
@@ -421,7 +465,7 @@ public class InserirModificarJugador extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
-    private javax.swing.JPanel jPanel1;
+    private javax.swing.JLabel lblFoto;
     private javax.swing.JRadioButton rbDona;
     private javax.swing.JRadioButton rbHome;
     private javax.swing.JLabel tornarEnrere;
