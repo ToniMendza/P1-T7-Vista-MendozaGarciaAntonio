@@ -28,6 +28,8 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableModel;
+import javax.xml.stream.XMLOutputFactory;
+import javax.xml.stream.XMLStreamWriter;
 import org.milaifontanals.clubEsportiu.model.Categoria;
 import org.milaifontanals.clubEsportiu.model.Jugador;
 import org.milaifontanals.clubEsportiu.model.Temporada;
@@ -592,41 +594,123 @@ public class GestioJugadors extends javax.swing.JFrame {
     }//GEN-LAST:event_btnEsborrarActionPerformed
 
     private void btnExportarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExportarActionPerformed
-                    List<Jugador> llJugadors = null;
+        Map<Jugador, String> llJugadors = null;
+
         try {
             llJugadors = capaOracleJDBC.obtenirJugadorsAmbEquips();
             exportarACSV(llJugadors, "jugadors.csv");
-            JOptionPane.showMessageDialog(null, "Jugadors exportats amb format csv");
+            JOptionPane.showMessageDialog(null, "Jugadors exportats amb format CSV");
+            exportarAXML(llJugadors, "jugadors.xml");
+             JOptionPane.showMessageDialog(null, "Jugadors exportats amb format XML");
         } catch (GestorBDClubEsportiuException ex) {
             Logger.getLogger(GestioJugadors.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, "Error exportant jugadors: " + ex.getMessage());
         }
     }//GEN-LAST:event_btnExportarActionPerformed
-    private void exportarACSV(List<Jugador> llJugadors, String archivoCSV) {
-
+    private void exportarACSV(Map<Jugador, String> llJugadors, String archivoCSV) {
         try (FileWriter writer = new FileWriter(archivoCSV)) {
-            
-            writer.append("ID,Nom,Cognom,Sexe,Data Naixement,NIF,IBAN,REVISIO,ADREÇA,CODI POSTAL, FOTO,Nom Equip\n");
+            writer.append("ID,Nom,Cognom,Sexe,Data Naixement,NIF,IBAN,Adreça,Codi Postal,Població,Foto,Equips\n");
 
-           
-            for (Jugador jugador : llJugadors) {
+            for (Map.Entry<Jugador, String> entry : llJugadors.entrySet()) {
+                Jugador jugador = entry.getKey();
+                String equips = entry.getValue();
+
                 writer.append(jugador.getId() + ",")
-                      .append(jugador.getNom()+ ",")
-                      .append(jugador.getCognoms()+ ",")
-                      .append(jugador.getSexe()+ ",")
-                      .append(jugador.getDataNaixement()+ ",")
-                      .append(jugador.getIdLegal()+ ",")
-                      .append(jugador.getIBAN()+ ",")
-                      .append(jugador.getRevisio()+ ",")
-                      .append(jugador.getAdreca()+ ",")
-                      .append(jugador.getAdreca()+ ",")
-                      .append(jugador.getCodiPostal()+ ",")
-                      .append(jugador.getFoto()+ ",")
-                      .append(jugador.getNomEquip()+ "\n");
+                        .append(jugador.getNom() + ",")
+                        .append(jugador.getCognoms() + ",")
+                        .append(jugador.getSexe() + ",")
+                        .append(jugador.getDataNaixement() + ",")
+                        .append(jugador.getIdLegal() + ",")
+                        .append(jugador.getIBAN() + ",")
+                        .append(jugador.getAdreca() + ",")
+                        .append(jugador.getCodiPostal() + ",")
+                        .append(jugador.getPoblacio() + ",")
+                        .append(jugador.getFoto() + ",")
+                        .append(equips + "\n");
             }
+
+            System.out.println("Jugadors exportats correctament a " + archivoCSV);
         } catch (IOException e) {
             System.err.println("Error al exportar a CSV: " + e.getMessage());
         }
     }
+
+    private void exportarAXML(Map<Jugador, String> llJugadors, String archivoXML) {
+        try {
+
+            XMLOutputFactory xmlOutputFactory = XMLOutputFactory.newInstance();
+            try (FileWriter fileWriter = new FileWriter(archivoXML)) {
+                XMLStreamWriter xmlWriter = xmlOutputFactory.createXMLStreamWriter(fileWriter);
+
+                xmlWriter.writeStartDocument("UTF-8", "1.0");
+                xmlWriter.writeStartElement("Jugadors");
+
+                for (Map.Entry<Jugador, String> entry : llJugadors.entrySet()) {
+                    Jugador jugador = entry.getKey();
+                    String equips = entry.getValue();
+
+                    xmlWriter.writeStartElement("Jugador");
+
+                    xmlWriter.writeStartElement("ID");
+                    xmlWriter.writeCharacters(String.valueOf(jugador.getId()));
+                    xmlWriter.writeEndElement();
+
+                    xmlWriter.writeStartElement("Nom");
+                    xmlWriter.writeCharacters(jugador.getNom());
+                    xmlWriter.writeEndElement();
+
+                    xmlWriter.writeStartElement("Cognom");
+                    xmlWriter.writeCharacters(jugador.getCognoms());
+                    xmlWriter.writeEndElement();
+
+                    xmlWriter.writeStartElement("Sexe");
+                    xmlWriter.writeCharacters(String.valueOf(jugador.getSexe()));
+                    xmlWriter.writeEndElement();
+
+                    xmlWriter.writeStartElement("DataNaixement");
+                    xmlWriter.writeCharacters(String.valueOf(jugador.getDataNaixement()));
+                    xmlWriter.writeEndElement();
+
+                    xmlWriter.writeStartElement("NIF");
+                    xmlWriter.writeCharacters(jugador.getIdLegal());
+                    xmlWriter.writeEndElement();
+
+                    xmlWriter.writeStartElement("IBAN");
+                    xmlWriter.writeCharacters(jugador.getIBAN());
+                    xmlWriter.writeEndElement();
+
+                    xmlWriter.writeStartElement("Adreça");
+                    xmlWriter.writeCharacters(jugador.getAdreca());
+                    xmlWriter.writeEndElement();
+
+                    xmlWriter.writeStartElement("CodiPostal");
+                    xmlWriter.writeCharacters(jugador.getCodiPostal());
+                    xmlWriter.writeEndElement();
+
+                    xmlWriter.writeStartElement("Poblacio");
+                    xmlWriter.writeCharacters(jugador.getPoblacio());
+                    xmlWriter.writeEndElement();
+
+                    xmlWriter.writeStartElement("Foto");
+                    xmlWriter.writeCharacters(jugador.getFoto());
+                    xmlWriter.writeEndElement();
+
+                    xmlWriter.writeStartElement("Equips");
+                    xmlWriter.writeCharacters(equips);
+                    xmlWriter.writeEndElement();
+
+                    xmlWriter.writeEndElement();
+                }
+
+                xmlWriter.writeEndElement();
+                xmlWriter.writeEndDocument();
+
+            }
+        } catch (Exception e) {
+            System.err.println("Error al exportar a XML: " + e.getMessage());
+        }
+    }
+
     public void omplirTaula(List<Jugador> jugadors) {
         DefaultTableModel model = (DefaultTableModel) tableJugador.getModel();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");

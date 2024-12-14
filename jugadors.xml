@@ -1,0 +1,338 @@
+<?xml version="1.0" encoding="UTF-8"?><Jugadors>
+    <Jugador>
+        <ID>10</ID>
+        <Nom>Paula</Nom>
+        <Cognom>Molina Sánchez</Cognom>
+        <Sexe>D</Sexe>
+        <DataNaixement>2004-05-07</DataNaixement>
+        <NIF>01234567N</NIF>
+        <IBAN>ES2100302053091234567804</IBAN>
+        <Adreça>Carrer de Pau Claris 200</Adreça>
+        <CodiPostal>08010</CodiPostal>
+        <Poblacio>Barcelona</Poblacio>
+        <Foto>C:\Users\isard\Desktop\FOTOS-bd\pexels-simon-robben-55958-614810.jpg</Foto>
+        <Equips>E</Equips>
+    </Jugador>
+    <Jugador>
+        <ID>12</ID>
+        <Nom>Laia</Nom>
+        <Cognom>Martínez Soler</Cognom>
+        <Sexe>D</Sexe>
+        <DataNaixement>1998-09-22</DataNaixement>
+        <NIF>87654321B</NIF>
+        <IBAN>ES6000491500051234567892</IBAN>
+        <Adreça>Avinguda Diagonal 456</Adreça>
+        <CodiPostal>08028</CodiPostal>
+        <Poblacio>Barcelona</Poblacio>
+        <Foto>C:\Users\isard\Desktop\FOTOS-bd\pexels-pexels-clarango-3866555.jpg</Foto>
+        <Equips>I</Equips>
+    </Jugador>
+    <Jugador>
+        <ID>8</ID>
+        <Nom>Pol</Nom>
+        <Cognom>Cruz Bonet</Cognom>
+        <Sexe>H</Sexe>
+        <DataNaixement>2009-02-18</DataNaixement>
+        <NIF>56789012I</NIF>
+        <IBAN>ES4300302053091234567899</IBAN>
+        <Adreça>Passeig de Sant Joan 12</Adreça>
+        <CodiPostal>08009</CodiPostal>
+        <Poblacio>Barcelona</Poblacio>
+        <Foto>C:\Users\isard\Desktop\FOTOS-bd\pexels-olly-712513.jpg</Foto>
+        <Equips>F</Equips>
+    </Jugador>
+    <Jugador>
+        <ID>1</ID>
+        <Nom>Marc</Nom>
+        <Cognom>García Puig</Cognom>
+        <Sexe>H</Sexe>
+        <DataNaixement>2012-05-15</DataNaixement>
+        <NIF>12345678A</NIF>
+        <IBAN>ES6621000418401234567891</IBAN>
+        <Adreça>Carrer Major 123</Adreça>
+        <CodiPostal>08001</CodiPostal>
+        <Poblacio>Barcelona</Poblacio>
+        <Foto>C:\Users\isard\Desktop\FOTOS-bd\pexels-danxavier-1121796.jpg</Foto>
+        <Equips>B-C</Equips>
+    </Jugador>
+    <Jugador>
+        <ID>5</ID>
+        <Nom>Clara</Nom>
+        <Cognom>Lopez Miró</Cognom>
+        <Sexe>D</Sexe>
+        <DataNaixement>2005-01-30</DataNaixement>
+        <NIF>23456789F</NIF>
+        <IBAN>ES7200302053091234567896</IBAN>
+        <Adreça>Carrer Aragó 300</Adreça>
+        <CodiPostal>08009</CodiPostal>
+        <Poblacio>Barcelona</Poblacio>
+        <Foto>C:\Users\isard\Desktop\FOTOS-bd\pexels-pexels-olly-846741.jpg</Foto>
+        <Equips>A</Equips>
+    </Jugador>
+    <Jugador>
+        <ID>13</ID>
+        <Nom>Elena</Nom>
+        <Cognom>Serrano Pi</Cognom>
+        <Sexe>D</Sexe>
+        <DataNaixement>1999-12-08</DataNaixement>
+        <NIF>45678901H</NIF>
+        <IBAN>ES3200302053091234567898</IBAN>
+        <Adreça>Avinguda Meridiana 456</Adreça>
+        <CodiPostal>08030</CodiPostal>
+        <Poblacio>Barcelona</Poblacio>
+        <Foto>C:\Users\isard\Desktop\FOTOS-bd\pexels-simon-robben-55958-614810.jpg</Foto>
+        <Equips>I</Equips>
+    </Jugador>
+    <Jugador>
+        <ID>14</ID>
+        <Nom>Sergi</Nom>
+        <Cognom>Navarro Pérez</Cognom>
+        <Sexe>H</Sexe>
+        <DataNaixement>1995-06-15</DataNaixement>
+        <NIF>78901234K</NIF>
+        <IBAN>ES5400302053091234567801</IBAN>
+        <Adreça>Carrer Urgell 89</Adreça>
+        <CodiPostal>08011</CodiPostal>
+        <Poblacio>Barcelona</Poblacio>
+        <Foto>C:\\Users\\isard\\Desktop\\FOTOS-bd\\pexels-olly-774909.jpg</Foto>
+        <Equips>G</Equips>
+    </Jugador>
+    <Jugador>
+        <ID>17</ID>
+        <Nom>Xavier</Nom>
+        <Cognom>Prats Llorente</Cognom>
+        <Sexe>H</Sexe>
+        <DataNaixement>2010-07-20</DataNaixement>
+        <NIF>33445566P</NIF>
+        <IBAN>ES3100302053091234567806</IBAN>
+        <Adreça>Carrer Provença 110</Adreça>
+        <CodiPostal>08008</CodiPostal>
+        <Poblacio>Barcelona</Poblacio>
+        <Foto>C:\\Users\\isard\\Desktop\\FOTOS-bd\\pexels-danxavier-1121796.jpg</Foto>
+        <Equips>SenseEquip</Equips>
+    </Jugador>
+    <Jugador>
+        <ID>11</ID>
+        <Nom>Gerard</Nom>
+        <Cognom>Martí Puig</Cognom>
+        <Sexe>H</Sexe>
+        <DataNaixement>2001-11-25</DataNaixement>
+        <NIF>12345678O</NIF>
+        <IBAN>ES3200302053091234567805</IBAN>
+        <Adreça>Carrer Enric Granados 101</Adreça>
+        <CodiPostal>08007</CodiPostal>
+        <Poblacio>Barcelona</Poblacio>
+        <Foto>C:\Users\isard\Desktop\FOTOS-bd\pexels-pexels-olly-846741.jpg</Foto>
+        <Equips>E-G</Equips>
+    </Jugador>
+    <Jugador>
+        <ID>6</ID>
+        <Nom>Pau</Nom>
+        <Cognom>Sánchez Pujol</Cognom>
+        <Sexe>H</Sexe>
+        <DataNaixement>1998-07-09</DataNaixement>
+        <NIF>99887766E</NIF>
+        <IBAN>ES7100302053091234567895</IBAN>
+        <Adreça>Carrer Balmes 202</Adreça>
+        <CodiPostal>08007</CodiPostal>
+        <Poblacio>Barcelona</Poblacio>
+        <Foto>C:\Users\isard\Desktop\FOTOS-bd\realistic_soccer_player.jpg</Foto>
+        <Equips>F-H</Equips>
+    </Jugador>
+    <Jugador>
+        <ID>18</ID>
+        <Nom>Sara</Nom>
+        <Cognom>Costa Serrano</Cognom>
+        <Sexe>D</Sexe>
+        <DataNaixement>2009-04-19</DataNaixement>
+        <NIF>22334455Q</NIF>
+        <IBAN>ES1100302053091234567808</IBAN>
+        <Adreça>Carrer Diputació 45</Adreça>
+        <CodiPostal>08009</CodiPostal>
+        <Poblacio>Barcelona</Poblacio>
+        <Foto>C:\\Users\\isard\\Desktop\\FOTOS-bd\\pexels-olly-774909.jpg</Foto>
+        <Equips>SenseEquip</Equips>
+    </Jugador>
+    <Jugador>
+        <ID>7</ID>
+        <Nom>Marta</Nom>
+        <Cognom>Ribas Prat</Cognom>
+        <Sexe>D</Sexe>
+        <DataNaixement>2007-04-03</DataNaixement>
+        <NIF>67890123J</NIF>
+        <IBAN>ES5400302053091234567800</IBAN>
+        <Adreça>Carrer Consell de Cent 456</Adreça>
+        <CodiPostal>08011</CodiPostal>
+        <Poblacio>Barcelona</Poblacio>
+        <Foto>C:\Users\isard\Desktop\FOTOS-bd\pexels-danxavier-1121796.jpg</Foto>
+        <Equips>A</Equips>
+    </Jugador>
+    <Jugador>
+        <ID>24</ID>
+        <Nom>Clara</Nom>
+        <Cognom>Esteve González</Cognom>
+        <Sexe>D</Sexe>
+        <DataNaixement>1990-06-05</DataNaixement>
+        <NIF>99887744V</NIF>
+        <IBAN>ES5500302053091234567814</IBAN>
+        <Adreça>Ronda Universitat 56</Adreça>
+        <CodiPostal>08007</CodiPostal>
+        <Poblacio>Barcelona</Poblacio>
+        <Foto>C:\\Users\\isard\\Desktop\\FOTOS-bd\\pexels-olly-846741.jpg</Foto>
+        <Equips>F</Equips>
+    </Jugador>
+    <Jugador>
+        <ID>9</ID>
+        <Nom>David</Nom>
+        <Cognom>Gómez Torres</Cognom>
+        <Sexe>H</Sexe>
+        <DataNaixement>2003-08-12</DataNaixement>
+        <NIF>90123456M</NIF>
+        <IBAN>ES1200302053091234567803</IBAN>
+        <Adreça>Carrer de Sants 100</Adreça>
+        <CodiPostal>08028</CodiPostal>
+        <Poblacio>Barcelona</Poblacio>
+        <Foto>C:\Users\isard\Desktop\FOTOS-bd\pexels-olly-774909.jpg</Foto>
+        <Equips>E-F-G-H</Equips>
+    </Jugador>
+    <Jugador>
+        <ID>15</ID>
+        <Nom>Carla</Nom>
+        <Cognom>Domínguez Ruiz</Cognom>
+        <Sexe>D</Sexe>
+        <DataNaixement>1994-03-30</DataNaixement>
+        <NIF>89012345L</NIF>
+        <IBAN>ES2100302053091234567802</IBAN>
+        <Adreça>Carrer Gran Via 150</Adreça>
+        <CodiPostal>08007</CodiPostal>
+        <Poblacio>Barcelona</Poblacio>
+        <Foto>C:\\Users\\isard\\Desktop\\FOTOS-bd\\pexels-danxavier-1121796.jpg</Foto>
+        <Equips>I</Equips>
+    </Jugador>
+    <Jugador>
+        <ID>23</ID>
+        <Nom>Miquel</Nom>
+        <Cognom>Duran Solé</Cognom>
+        <Sexe>H</Sexe>
+        <DataNaixement>1988-07-29</DataNaixement>
+        <NIF>55667799U</NIF>
+        <IBAN>ES4400302053091234567813</IBAN>
+        <Adreça>Avinguda Paral·lel 78</Adreça>
+        <CodiPostal>08004</CodiPostal>
+        <Poblacio>Barcelona</Poblacio>
+        <Foto>C:\\Users\\isard\\Desktop\\FOTOS-bd\\pexels-simon-robben-55958-614810.jpg</Foto>
+        <Equips>F</Equips>
+    </Jugador>
+    <Jugador>
+        <ID>4</ID>
+        <Nom>Ana</Nom>
+        <Cognom>Castells López</Cognom>
+        <Sexe>D</Sexe>
+        <DataNaixement>2011-02-22</DataNaixement>
+        <NIF>12121212X</NIF>
+        <IBAN>ES6600491500051234567810</IBAN>
+        <Adreça>Carrer Roselló 321</Adreça>
+        <CodiPostal>08025</CodiPostal>
+        <Poblacio>Barcelona</Poblacio>
+        <Foto>C:\Users\isard\Desktop\FOTOS-bd\pexels-simon-robben-55958-614810.jpg</Foto>
+        <Equips>C</Equips>
+    </Jugador>
+    <Jugador>
+        <ID>19</ID>
+        <Nom>Víctor</Nom>
+        <Cognom>Nadal Ros</Cognom>
+        <Sexe>H</Sexe>
+        <DataNaixement>2004-09-14</DataNaixement>
+        <NIF>33445577G</NIF>
+        <IBAN>ES5200302053091234567809</IBAN>
+        <Adreça>Gran Via 80</Adreça>
+        <CodiPostal>08013</CodiPostal>
+        <Poblacio>Barcelona</Poblacio>
+        <Foto>C:\\Users\\isard\\Desktop\\FOTOS-bd\\pexels-simon-robben-55958-614810.jpg</Foto>
+        <Equips>A</Equips>
+    </Jugador>
+    <Jugador>
+        <ID>22</ID>
+        <Nom>Júlia</Nom>
+        <Cognom>Carreras Valls</Cognom>
+        <Sexe>D</Sexe>
+        <DataNaixement>1990-03-07</DataNaixement>
+        <NIF>11224433T</NIF>
+        <IBAN>ES3300302053091234567823</IBAN>
+        <Adreça>Plaça Catalunya 12</Adreça>
+        <CodiPostal>08088</CodiPostal>
+        <Poblacio>Barcelona</Poblacio>
+        <Foto>C:\\Users\\isard\\Desktop\\FOTOS-bd\\pexels-olly-774909.jpg</Foto>
+        <Equips>F</Equips>
+    </Jugador>
+    <Jugador>
+        <ID>21</ID>
+        <Nom>Jan</Nom>
+        <Cognom>Ruiz Ferrer</Cognom>
+        <Sexe>H</Sexe>
+        <DataNaixement>2003-08-18</DataNaixement>
+        <NIF>88990011S</NIF>
+        <IBAN>ES7000302053091234567811</IBAN>
+        <Adreça>Ronda Sant Pere 23</Adreça>
+        <CodiPostal>08010</CodiPostal>
+        <Poblacio>Barcelona</Poblacio>
+        <Foto>C:\\Users\\isard\\Desktop\\FOTOS-bd\\pexels-olly-846741.jpg</Foto>
+        <Equips>SenseEquip</Equips>
+    </Jugador>
+    <Jugador>
+        <ID>2</ID>
+        <Nom>Jordi</Nom>
+        <Cognom>Ferrer Casas</Cognom>
+        <Sexe>H</Sexe>
+        <DataNaixement>2015-03-10</DataNaixement>
+        <NIF>11223344C</NIF>
+        <IBAN>ES9420805801101234567891</IBAN>
+        <Adreça>Passeig de Gràcia 789</Adreça>
+        <CodiPostal>08008</CodiPostal>
+        <Poblacio>Barcelona</Poblacio>
+        <Foto>C:\Users\isard\Desktop\FOTOS-bd\pexels-olly-712513.jpg</Foto>
+        <Equips>B</Equips>
+    </Jugador>
+    <Jugador>
+        <ID>3</ID>
+        <Nom>Núria</Nom>
+        <Cognom>Vidal Roca</Cognom>
+        <Sexe>D</Sexe>
+        <DataNaixement>2017-11-05</DataNaixement>
+        <NIF>55667788D</NIF>
+        <IBAN>ES9000246912501234567891</IBAN>
+        <Adreça>Rambla Catalunya 101</Adreça>
+        <CodiPostal>08010</CodiPostal>
+        <Poblacio>Barcelona</Poblacio>
+        <Foto>C:\Users\isard\Desktop\FOTOS-bd\pexels-olly-774909.jpg</Foto>
+        <Equips>C</Equips>
+    </Jugador>
+    <Jugador>
+        <ID>16</ID>
+        <Nom>Laura</Nom>
+        <Cognom>Mestre Vidal</Cognom>
+        <Sexe>D</Sexe>
+        <DataNaixement>2010-12-12</DataNaixement>
+        <NIF>66778899X</NIF>
+        <IBAN>ES2200302053091234567897</IBAN>
+        <Adreça>Carrer de la Marina 99</Adreça>
+        <CodiPostal>08025</CodiPostal>
+        <Poblacio>Barcelona</Poblacio>
+        <Foto>C:\\Users\\isard\\Desktop\\FOTOS-bd\\pexels-olly-712513.jpg</Foto>
+        <Equips>SenseEquip</Equips>
+    </Jugador>
+    <Jugador>
+        <ID>20</ID>
+        <Nom>Aina</Nom>
+        <Cognom>Blanch Puig</Cognom>
+        <Sexe>D</Sexe>
+        <DataNaixement>2006-01-11</DataNaixement>
+        <NIF>77889900R</NIF>
+        <IBAN>ES6100302053091234567810</IBAN>
+        <Adreça>Passeig Colom 120</Adreça>
+        <CodiPostal>08002</CodiPostal>
+        <Poblacio>Barcelona</Poblacio>
+        <Foto>C:\\Users\\isard\\Desktop\\FOTOS-bd\\pexels-danxavier-1121796.jpg</Foto>
+        <Equips>SenseEquip</Equips>
+    </Jugador>
+</Jugadors>
