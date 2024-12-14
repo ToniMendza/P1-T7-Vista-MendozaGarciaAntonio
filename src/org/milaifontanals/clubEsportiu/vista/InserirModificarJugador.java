@@ -365,7 +365,7 @@ public class InserirModificarJugador extends javax.swing.JFrame {
 
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(null, "Error en les dades del jugador: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-            ex.printStackTrace();
+//            ex.printStackTrace();
             return;
         }
         //Per inserir

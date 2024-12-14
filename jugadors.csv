@@ -1,0 +1,31 @@
+ID,Nom,Cognom,Sexe,Data Naixement,NIF,IBAN,REVISIO,ADREÇA,CODI POSTAL, FOTO,Nom Equip
+20,Aina,Blanch Puig,D,2006-01-11,77889900R,ES6100302053091234567810,null,Passeig Colom 120,Passeig Colom 120,08002,C:\\Users\\isard\\Desktop\\FOTOS-bd\\pexels-danxavier-1121796.jpg,Sense equip
+4,Ana,Castells López,D,2011-02-22,12121212X,ES6600491500051234567810,null,Carrer Roselló 321,Carrer Roselló 321,08025,C:\Users\isard\Desktop\FOTOS-bd\pexels-simon-robben-55958-614810.jpg,C
+15,Carla,Domínguez Ruiz,D,1994-03-30,89012345L,ES2100302053091234567802,null,Carrer Gran Via 150,Carrer Gran Via 150,08007,C:\\Users\\isard\\Desktop\\FOTOS-bd\\pexels-danxavier-1121796.jpg,I
+5,Clara,Lopez Miró,D,2005-01-30,23456789F,ES7200302053091234567896,null,Carrer Aragó 300,Carrer Aragó 300,08009,C:\Users\isard\Desktop\FOTOS-bd\pexels-pexels-olly-846741.jpg,A
+24,Clara,Esteve González,D,1990-06-05,99887744V,ES5500302053091234567814,null,Ronda Universitat 56,Ronda Universitat 56,08007,C:\\Users\\isard\\Desktop\\FOTOS-bd\\pexels-olly-846741.jpg,F
+9,David,Gómez Torres,H,2003-08-12,90123456M,ES1200302053091234567803,null,Carrer de Sants 100,Carrer de Sants 100,08028,C:\Users\isard\Desktop\FOTOS-bd\pexels-olly-774909.jpg,H
+9,David,Gómez Torres,H,2003-08-12,90123456M,ES1200302053091234567803,null,Carrer de Sants 100,Carrer de Sants 100,08028,C:\Users\isard\Desktop\FOTOS-bd\pexels-olly-774909.jpg,F
+9,David,Gómez Torres,H,2003-08-12,90123456M,ES1200302053091234567803,null,Carrer de Sants 100,Carrer de Sants 100,08028,C:\Users\isard\Desktop\FOTOS-bd\pexels-olly-774909.jpg,E
+9,David,Gómez Torres,H,2003-08-12,90123456M,ES1200302053091234567803,null,Carrer de Sants 100,Carrer de Sants 100,08028,C:\Users\isard\Desktop\FOTOS-bd\pexels-olly-774909.jpg,G
+13,Elena,Serrano Pi,D,1999-12-08,45678901H,ES3200302053091234567898,null,Avinguda Meridiana 456,Avinguda Meridiana 456,08030,C:\Users\isard\Desktop\FOTOS-bd\pexels-simon-robben-55958-614810.jpg,I
+11,Gerard,Martí Puig,H,2001-11-25,12345678O,ES3200302053091234567805,null,Carrer Enric Granados 101,Carrer Enric Granados 101,08007,C:\Users\isard\Desktop\FOTOS-bd\pexels-pexels-olly-846741.jpg,E
+11,Gerard,Martí Puig,H,2001-11-25,12345678O,ES3200302053091234567805,null,Carrer Enric Granados 101,Carrer Enric Granados 101,08007,C:\Users\isard\Desktop\FOTOS-bd\pexels-pexels-olly-846741.jpg,G
+21,Jan,Ruiz Ferrer,H,2003-08-18,88990011S,ES7000302053091234567811,null,Ronda Sant Pere 23,Ronda Sant Pere 23,08010,C:\\Users\\isard\\Desktop\\FOTOS-bd\\pexels-olly-846741.jpg,Sense equip
+2,Jordi,Ferrer Casas,H,2015-03-10,11223344C,ES9420805801101234567891,null,Passeig de Gràcia 789,Passeig de Gràcia 789,08008,C:\Users\isard\Desktop\FOTOS-bd\pexels-olly-712513.jpg,B
+22,Júlia,Carreras Valls,D,1990-03-07,11224433T,ES3300302053091234567823,null,Plaça Catalunya 12,Plaça Catalunya 12,08088,C:\\Users\\isard\\Desktop\\FOTOS-bd\\pexels-olly-774909.jpg,F
+12,Laia,Martínez Soler,D,1998-09-22,87654321B,ES6000491500051234567892,null,Avinguda Diagonal 456,Avinguda Diagonal 456,08028,C:\Users\isard\Desktop\FOTOS-bd\pexels-pexels-clarango-3866555.jpg,I
+16,Laura,Mestre Vidal,D,2010-12-12,66778899X,ES2200302053091234567897,null,Carrer de la Marina 99,Carrer de la Marina 99,08025,C:\\Users\\isard\\Desktop\\FOTOS-bd\\pexels-olly-712513.jpg,Sense equip
+1,Marc,García Puig,H,2012-05-15,12345678A,ES6621000418401234567891,null,Carrer Major 123,Carrer Major 123,08001,C:\Users\isard\Desktop\FOTOS-bd\pexels-danxavier-1121796.jpg,B
+1,Marc,García Puig,H,2012-05-15,12345678A,ES6621000418401234567891,null,Carrer Major 123,Carrer Major 123,08001,C:\Users\isard\Desktop\FOTOS-bd\pexels-danxavier-1121796.jpg,C
+7,Marta,Ribas Prat,D,2007-04-03,67890123J,ES5400302053091234567800,null,Carrer Consell de Cent 456,Carrer Consell de Cent 456,08011,C:\Users\isard\Desktop\FOTOS-bd\pexels-danxavier-1121796.jpg,A
+23,Miquel,Duran Solé,H,1988-07-29,55667799U,ES4400302053091234567813,null,Avinguda Paral·lel 78,Avinguda Paral·lel 78,08004,C:\\Users\\isard\\Desktop\\FOTOS-bd\\pexels-simon-robben-55958-614810.jpg,F
+3,Núria,Vidal Roca,D,2017-11-05,55667788D,ES9000246912501234567891,null,Rambla Catalunya 101,Rambla Catalunya 101,08010,C:\Users\isard\Desktop\FOTOS-bd\pexels-olly-774909.jpg,C
+6,Pau,Sánchez Pujol,H,1998-07-09,99887766E,ES7100302053091234567895,null,Carrer Balmes 202,Carrer Balmes 202,08007,C:\Users\isard\Desktop\FOTOS-bd\realistic_soccer_player.jpg,H
+6,Pau,Sánchez Pujol,H,1998-07-09,99887766E,ES7100302053091234567895,null,Carrer Balmes 202,Carrer Balmes 202,08007,C:\Users\isard\Desktop\FOTOS-bd\realistic_soccer_player.jpg,F
+10,Paula,Molina Sánchez,D,2004-05-07,01234567N,ES2100302053091234567804,null,Carrer de Pau Claris 200,Carrer de Pau Claris 200,08010,C:\Users\isard\Desktop\FOTOS-bd\pexels-simon-robben-55958-614810.jpg,E
+8,Pol,Cruz Bonet,H,2009-02-18,56789012I,ES4300302053091234567899,null,Passeig de Sant Joan 12,Passeig de Sant Joan 12,08009,C:\Users\isard\Desktop\FOTOS-bd\pexels-olly-712513.jpg,F
+18,Sara,Costa Serrano,D,2009-04-19,22334455Q,ES1100302053091234567808,null,Carrer Diputació 45,Carrer Diputació 45,08009,C:\\Users\\isard\\Desktop\\FOTOS-bd\\pexels-olly-774909.jpg,Sense equip
+14,Sergi,Navarro Pérez,H,1995-06-15,78901234K,ES5400302053091234567801,null,Carrer Urgell 89,Carrer Urgell 89,08011,C:\\Users\\isard\\Desktop\\FOTOS-bd\\pexels-olly-774909.jpg,G
+19,Víctor,Nadal Ros,H,2004-09-14,33445577G,ES5200302053091234567809,null,Gran Via 80,Gran Via 80,08013,C:\\Users\\isard\\Desktop\\FOTOS-bd\\pexels-simon-robben-55958-614810.jpg,A
+17,Xavier,Prats Llorente,H,2010-07-20,33445566P,ES3100302053091234567806,null,Carrer Provença 110,Carrer Provença 110,08008,C:\\Users\\isard\\Desktop\\FOTOS-bd\\pexels-danxavier-1121796.jpg,Sense equip

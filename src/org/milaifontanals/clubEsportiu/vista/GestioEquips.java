@@ -38,11 +38,12 @@ public class GestioEquips extends javax.swing.JFrame {
     /**
      * Creates new form GestioEquips
      */
-    public GestioEquips(IGestorBDClubEsportiu capa, Temporada temp) {
+    public GestioEquips(IGestorBDClubEsportiu capa, Temporada temp, FinestraLogin f) {
         initComponents();
 
         this.capaOracleJDBC = capa;
 //        this.tmp = temp;
+        this.fLogin=f;
 
         try {
             llTemporades = capaOracleJDBC.obtenirTemporades();
@@ -148,6 +149,7 @@ public class GestioEquips extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Gestió Dels Equips");
+        setPreferredSize(new java.awt.Dimension(840, 440));
 
         comboNomEquip.setMaximumRowCount(6);
         comboNomEquip.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
@@ -194,6 +196,11 @@ public class GestioEquips extends javax.swing.JFrame {
         });
 
         btnInforme.setText("Informe");
+        btnInforme.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnInformeActionPerformed(evt);
+            }
+        });
 
         tableEquips.setAutoCreateRowSorter(true);
         tableEquips.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
@@ -339,6 +346,7 @@ public class GestioEquips extends javax.swing.JFrame {
     private void tornarEnrereMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tornarEnrereMouseClicked
         FinestraLogin log = new FinestraLogin(capaOracleJDBC);
         log.setVisible(true);
+        fLogin.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_tornarEnrereMouseClicked
 
@@ -376,6 +384,10 @@ public class GestioEquips extends javax.swing.JFrame {
         tempEscollida = (Temporada) comboTemporada.getSelectedItem();
         cercarEquips();
     }//GEN-LAST:event_comboTemporadaItemStateChanged
+
+    private void btnInformeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInformeActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnInformeActionPerformed
 
     /**
      * @param args the command line arguments

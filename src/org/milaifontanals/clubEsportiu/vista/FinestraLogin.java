@@ -112,6 +112,7 @@ public class FinestraLogin extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Gestió Temporades");
+        setPreferredSize(new java.awt.Dimension(820, 480));
         setSize(new java.awt.Dimension(0, 0));
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
@@ -366,9 +367,9 @@ public class FinestraLogin extends javax.swing.JFrame {
 
     private void btnEquipsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEquipsActionPerformed
         Temporada temporada = (Temporada) comboTemporada.getSelectedItem();
-        GestioEquips fGestioEquips = new GestioEquips(capaOracleJDBC, temporada);
+        GestioEquips fGestioEquips = new GestioEquips(capaOracleJDBC, temporada,this);
         fGestioEquips.setVisible(true);
-        this.dispose();
+        this.setVisible(false);
     }//GEN-LAST:event_btnEquipsActionPerformed
 
     private void btnJugadorsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnJugadorsActionPerformed

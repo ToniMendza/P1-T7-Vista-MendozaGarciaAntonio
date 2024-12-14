@@ -4,6 +4,8 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.Font;
 import java.awt.font.TextAttribute;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.sql.Date;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -205,6 +207,11 @@ public class GestioJugadors extends javax.swing.JFrame {
         });
 
         btnExportar.setText("Exportar Jugadors");
+        btnExportar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnExportarActionPerformed(evt);
+            }
+        });
 
         tableJugador.setAutoCreateRowSorter(true);
         tableJugador.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
@@ -584,6 +591,42 @@ public class GestioJugadors extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnEsborrarActionPerformed
 
+    private void btnExportarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExportarActionPerformed
+                    List<Jugador> llJugadors = null;
+        try {
+            llJugadors = capaOracleJDBC.obtenirJugadorsAmbEquips();
+            exportarACSV(llJugadors, "jugadors.csv");
+            JOptionPane.showMessageDialog(null, "Jugadors exportats amb format csv");
+        } catch (GestorBDClubEsportiuException ex) {
+            Logger.getLogger(GestioJugadors.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_btnExportarActionPerformed
+    private void exportarACSV(List<Jugador> llJugadors, String archivoCSV) {
+
+        try (FileWriter writer = new FileWriter(archivoCSV)) {
+            
+            writer.append("ID,Nom,Cognom,Sexe,Data Naixement,NIF,IBAN,REVISIO,ADREÇA,CODI POSTAL, FOTO,Nom Equip\n");
+
+           
+            for (Jugador jugador : llJugadors) {
+                writer.append(jugador.getId() + ",")
+                      .append(jugador.getNom()+ ",")
+                      .append(jugador.getCognoms()+ ",")
+                      .append(jugador.getSexe()+ ",")
+                      .append(jugador.getDataNaixement()+ ",")
+                      .append(jugador.getIdLegal()+ ",")
+                      .append(jugador.getIBAN()+ ",")
+                      .append(jugador.getRevisio()+ ",")
+                      .append(jugador.getAdreca()+ ",")
+                      .append(jugador.getAdreca()+ ",")
+                      .append(jugador.getCodiPostal()+ ",")
+                      .append(jugador.getFoto()+ ",")
+                      .append(jugador.getNomEquip()+ "\n");
+            }
+        } catch (IOException e) {
+            System.err.println("Error al exportar a CSV: " + e.getMessage());
+        }
+    }
     public void omplirTaula(List<Jugador> jugadors) {
         DefaultTableModel model = (DefaultTableModel) tableJugador.getModel();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
@@ -594,40 +637,7 @@ public class GestioJugadors extends javax.swing.JFrame {
             model.addRow(new Object[]{jugador.getNom(), jugador.getSexe(), jugador.getDataNaixement().format(formatter), jugador.getIdLegal(), jugador.getNomCategoria(), jugador.getId()});
         }
     }
-    /**
-     * @param args the command line arguments
-     */
-//    public static void main(String args[]) {
-//        /* Set the Nimbus look and feel */
-//        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-//        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-//         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-//         */
-//        try {
-//            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-//                if ("Nimbus".equals(info.getName())) {
-//                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-//                    break;
-//                }
-//            }
-//        } catch (ClassNotFoundException ex) {
-//            java.util.logging.Logger.getLogger(GestioJugadors.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-//        } catch (InstantiationException ex) {
-//            java.util.logging.Logger.getLogger(GestioJugadors.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-//        } catch (IllegalAccessException ex) {
-//            java.util.logging.Logger.getLogger(GestioJugadors.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-//        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-//            java.util.logging.Logger.getLogger(GestioJugadors.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-//        }
-//        //</editor-fold>
-//
-//        /* Create and display the form */
-//        java.awt.EventQueue.invokeLater(new Runnable() {
-//            public void run() {
-//                new GestioJugadors().setVisible(true);
-//            }
-//        });
-//    }
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCercar;
