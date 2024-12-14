@@ -26,7 +26,6 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableModel;
-//import org.milaifontanals.clubEsportiu.jdbc.GestorBDClubEsportiuJdbc;
 import org.milaifontanals.clubEsportiu.model.Categoria;
 import org.milaifontanals.clubEsportiu.model.Jugador;
 import org.milaifontanals.clubEsportiu.model.Temporada;
@@ -61,7 +60,7 @@ public class GestioJugadors extends javax.swing.JFrame {
 
             this.capaOracleJDBC = capa;
             this.temp = temporada;
-            this.flogin=f;
+            this.flogin = f;
             lblFormat.setVisible(false);
             lblFormatNif.setVisible(false);
             lblInserir.setVisible(false);
@@ -451,10 +450,10 @@ public class GestioJugadors extends javax.swing.JFrame {
             // Recuperar el ID desde el modelo (columna 5 en este caso)
             int id = obtenirIDJugador();
             if (id != -1) {
-                InserirModificarJugador log = new InserirModificarJugador(id, capaOracleJDBC, temp,flogin);
+                InserirModificarJugador log = new InserirModificarJugador(id, capaOracleJDBC, temp, this);
                 log.setVisible(true);
-                this.dispose();
-                System.out.println("Jugador seleccionado: " + id);
+                this.setVisible(false);
+//                System.out.println("Jugador seleccionado: " + id);
             } else {
                 lblInserir.setVisible(true);
                 System.out.println("No se ha seleccionado ninguna fila.");
@@ -515,7 +514,7 @@ public class GestioJugadors extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(this, "La data introduïda no és vàlida. Format esperat: dd/MM/yyyy",
                         "Error de data", JOptionPane.ERROR_MESSAGE);
                 lblFormat.setVisible(true);
-                return; 
+                return;
             }
             data = validaData;
 
@@ -549,9 +548,9 @@ public class GestioJugadors extends javax.swing.JFrame {
 
     private void btnInserirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInserirActionPerformed
         int jugador = 0;
-        InserirModificarJugador log = new InserirModificarJugador(jugador, capaOracleJDBC, temp,flogin);
+        InserirModificarJugador log = new InserirModificarJugador(jugador, capaOracleJDBC, temp, this);
         log.setVisible(true);
-        this.dispose();
+        this.setVisible(false);
     }//GEN-LAST:event_btnInserirActionPerformed
 
     private void btnEsborrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEsborrarActionPerformed
