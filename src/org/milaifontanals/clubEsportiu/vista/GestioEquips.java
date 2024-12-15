@@ -1,5 +1,7 @@
 package org.milaifontanals.clubEsportiu.vista;
 
+import java.awt.Color;
+import java.awt.Component;
 import java.awt.Font;
 import java.awt.font.TextAttribute;
 import java.util.HashMap;
@@ -9,7 +11,9 @@ import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
 import org.milaifontanals.clubEsportiu.model.Equip;
@@ -43,7 +47,7 @@ public class GestioEquips extends javax.swing.JFrame {
 
         this.capaOracleJDBC = capa;
 //        this.tmp = temp;
-        this.fLogin=f;
+        this.fLogin = f;
 
         try {
             llTemporades = capaOracleJDBC.obtenirTemporades();
@@ -59,12 +63,12 @@ public class GestioEquips extends javax.swing.JFrame {
 
         tempEscollida = (Temporada) comboTemporada.getSelectedItem();
         cercarEquips();
-        TableColumn idColumn = tableEquips.getColumnModel().getColumn(4);
+        TableColumn idColumn = tableEquips.getColumnModel().getColumn(3);
         tableEquips.removeColumn(idColumn);
         tableEquips.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
     }
 
-    private void cercarEquips() {
+    protected void cercarEquips() {
         try {
             llEquips = capaOracleJDBC.obtenirEquipsPerTemporada(tempEscollida.getAny_temp());
             omplirTaula(llEquips);
@@ -75,57 +79,79 @@ public class GestioEquips extends javax.swing.JFrame {
     }
 
     public void omplirTaula(List<Equip> equips) {
-        DefaultTableModel model = (DefaultTableModel) tableEquips.getModel();
-        int idAnterior = -1;
+    DefaultTableModel model = (DefaultTableModel) tableEquips.getModel();
+    int idAnterior = -1;
 
-        model.setRowCount(0);
+    model.setRowCount(0);
 
-        for (Equip e : equips) {
-            try {
-
-                if (idAnterior != e.getIdCategoria()) {
-                    model.addRow(new Object[]{
-                        capaOracleJDBC.obtenirNomCategoriaPerId(e.getIdCategoria()), "", "", "", ""});
-                }
-
-                idAnterior = e.getIdCategoria();
-
+    for (Equip e : equips) {
+        try {
+ 
+            if (idAnterior != e.getIdCategoria()) {
                 model.addRow(new Object[]{
-                    e.getNom(),
-                    e.getTipus(),
-                    e.getIdAny(),
-                    capaOracleJDBC.obtenirNomCategoriaPerId(e.getIdCategoria()),
-                    e.getId()
-                });
-            } catch (GestorBDClubEsportiuException ex) {
-                Logger.getLogger(GestioEquips.class.getName()).log(Level.SEVERE, null, ex);
+                    capaOracleJDBC.obtenirNomCategoriaPerId(e.getIdCategoria()), "", "", "", ""});
             }
+
+            idAnterior = e.getIdCategoria();
+
+    
+            model.addRow(new Object[]{
+                e.getNom(),
+                e.getTipus(),
+                e.getIdAny(),
+                e.getId()
+            });
+        } catch (GestorBDClubEsportiuException ex) {
+            Logger.getLogger(GestioEquips.class.getName()).log(Level.SEVERE, null, ex);
         }
-        tableEquips.getSelectionModel().addListSelectionListener(event -> {
-            if (!event.getValueIsAdjusting()) {
-                int selectedRow = tableEquips.getSelectedRow();
-                if (selectedRow != -1) {
-                    int modelRow = tableEquips.convertRowIndexToModel(selectedRow); // obtener el valor de la columna oculta, en lugar de usar el índice visual de la tabla.
-                    Object idValue = ((DefaultTableModel) tableEquips.getModel()).getValueAt(modelRow, 4); // Índice en el modelo
-
-                    if (idValue == null || idValue.toString().trim().isEmpty()) {
-
-                        JOptionPane.showMessageDialog(
-                                this, "Has seleccionat una fila separadora. Si us plau, selecciona un equip vàlid.", "Selecció no vàlida",
-                                JOptionPane.WARNING_MESSAGE);
-
-                        // Deselecciona la fila para evitar confusiones
-                        tableEquips.clearSelection();
-                    } else {
-
-                        idEquip = Integer.parseInt(idValue.toString());
-                        System.out.println("ID seleccionat: " + idEquip);
-                    }
-                }
-            }
-        });
     }
 
+
+    tableEquips.setDefaultRenderer(Object.class, new DefaultTableCellRenderer() {
+        @Override
+        public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected,
+                                                       boolean hasFocus, int row, int column) {
+            Component cell = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+
+
+            if (table.getValueAt(row, 1) == null || table.getValueAt(row, 1).toString().trim().isEmpty()) {
+                cell.setBackground(new Color(230, 230, 255)); // Color azul claro para categoría
+                cell.setFont(cell.getFont().deriveFont(Font.BOLD)); 
+            } else {
+                cell.setBackground(Color.WHITE);
+                cell.setFont(cell.getFont().deriveFont(Font.PLAIN)); 
+            }
+
+
+            if (isSelected) {
+                cell.setBackground(new Color(184, 207, 229));
+            }
+
+            return cell;
+        }
+    });
+
+
+    tableEquips.getSelectionModel().addListSelectionListener(event -> {
+        if (!event.getValueIsAdjusting()) {
+            int selectedRow = tableEquips.getSelectedRow();
+            if (selectedRow != -1) {
+                int modelRow = tableEquips.convertRowIndexToModel(selectedRow);
+                Object idValue = ((DefaultTableModel) tableEquips.getModel()).getValueAt(modelRow, 3);
+
+                if (idValue == null || idValue.toString().trim().isEmpty()) {
+                    JOptionPane.showMessageDialog(
+                            this, "Has seleccionat una fila separadora. Si us plau, selecciona un equip vàlid.", "Selecció no vàlida",
+                            JOptionPane.WARNING_MESSAGE);
+                    tableEquips.clearSelection();
+                } else {
+                    idEquip = Integer.parseInt(idValue.toString());
+                    System.out.println("ID seleccionat: " + idEquip);
+                }
+            }
+        }
+    });
+}
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -206,24 +232,24 @@ public class GestioEquips extends javax.swing.JFrame {
         tableEquips.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         tableEquips.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
             },
             new String [] {
-                "Nom Equip", "Tipus", "Temporada", "Categoria", "ID"
+                "Nom Equip", "Tipus", "Temporada", "ID"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false
+                false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -326,17 +352,17 @@ public class GestioEquips extends javax.swing.JFrame {
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         if (tableEquips.getSelectedRow() != -1 && idEquip != 0) {
-                            Equip e = null;
-                try {
-                    e = capaOracleJDBC.obtenirEquipPerId(idEquip);
-                    FitxaEquip f_FitxaEquip=new FitxaEquip(capaOracleJDBC,e,this);
-                    f_FitxaEquip.setVisible(true);
-                    this.setVisible(false);
-                } catch (GestorBDClubEsportiuException ex) {
-                    Logger.getLogger(GestioEquips.class.getName()).log(Level.SEVERE, null, ex);
-                    JOptionPane.showMessageDialog(this, "Error en eliminar l'equip. Si us plau, prova més tard.", "Error d'eliminació", JOptionPane.ERROR_MESSAGE);
+            Equip e = null;
+            try {
+                e = capaOracleJDBC.obtenirEquipPerId(idEquip);
+                FitxaEquip f_FitxaEquip = new FitxaEquip(capaOracleJDBC, e, this);
+                f_FitxaEquip.setVisible(true);
+                this.setVisible(false);
+            } catch (GestorBDClubEsportiuException ex) {
+                Logger.getLogger(GestioEquips.class.getName()).log(Level.SEVERE, null, ex);
+                JOptionPane.showMessageDialog(this, "Error en eliminar l'equip. Si us plau, prova més tard.", "Error d'eliminació", JOptionPane.ERROR_MESSAGE);
 
-                }
+            }
         } else {
             JOptionPane.showMessageDialog(
                     this, "Has de seleccionar algún equip per gestionar la seva Fitxa.", "Selecció no vàlida", JOptionPane.WARNING_MESSAGE);
@@ -351,27 +377,42 @@ public class GestioEquips extends javax.swing.JFrame {
     }//GEN-LAST:event_tornarEnrereMouseClicked
 
     private void btnEsborrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEsborrarActionPerformed
-
+        Equip e = null;
         if (tableEquips.getSelectedRow() != -1 && idEquip != 0) {
-            int opcion = JOptionPane.showConfirmDialog(
-                    this, "El Equip podria tenir jugadors assignats. Estàs segur que vols esborrar-lo?", "Confirmació d'eliminació",
-                    JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
-
-            if (opcion == JOptionPane.YES_OPTION) {
-                Equip e = null;
-                try {
+            try {
+                if (capaOracleJDBC.equipSenseJugadors(idEquip)) {
                     e = capaOracleJDBC.obtenirEquipPerId(idEquip);
-                    capaOracleJDBC.eliminarEquipMembre(idEquip);
 
                     capaOracleJDBC.eliminarUnEquip(e);
-//                capaOracleJDBC.confirmarCanvis();
-                    JOptionPane.showMessageDialog(this, "Equip eliminat correctament.", "Eliminació exitosa", JOptionPane.INFORMATION_MESSAGE);
+                    JOptionPane.showMessageDialog(this, "Equip sense Jugadors eliminat correctament.", "Eliminació exitosa", JOptionPane.INFORMATION_MESSAGE);
 
-                } catch (GestorBDClubEsportiuException ex) {
-                    Logger.getLogger(GestioEquips.class.getName()).log(Level.SEVERE, null, ex);
-                    JOptionPane.showMessageDialog(this, "Error en eliminar l'equip. Si us plau, prova més tard.", "Error d'eliminació", JOptionPane.ERROR_MESSAGE);
+                    capaOracleJDBC.confirmarCanvis();
+                    cercarEquips();
+                } else {
+                    int opcion = JOptionPane.showConfirmDialog(
+                            this, "El Equip té jugadors assignats. Estàs segur que vols esborrar-lo?", "Confirmació d'eliminació",
+                            JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
 
+                    if (opcion == JOptionPane.YES_OPTION) {
+
+                        try {
+                            e = capaOracleJDBC.obtenirEquipPerId(idEquip);
+                            capaOracleJDBC.eliminarEquipMembre(idEquip);
+
+                            capaOracleJDBC.eliminarUnEquip(e);
+                            capaOracleJDBC.confirmarCanvis();
+                            JOptionPane.showMessageDialog(this, "Equip eliminat correctament.", "Eliminació exitosa", JOptionPane.INFORMATION_MESSAGE);
+                            cercarEquips();
+                        } catch (GestorBDClubEsportiuException ex) {
+                            Logger.getLogger(GestioEquips.class.getName()).log(Level.SEVERE, null, ex);
+                            JOptionPane.showMessageDialog(this, "Error en eliminar l'equip. Si us plau, prova més tard.", "Error d'eliminació", JOptionPane.ERROR_MESSAGE);
+
+                        }
+                    }
                 }
+
+            } catch (GestorBDClubEsportiuException ex) {
+                Logger.getLogger(GestioEquips.class.getName()).log(Level.SEVERE, null, ex);
             }
         } else {
             JOptionPane.showMessageDialog(

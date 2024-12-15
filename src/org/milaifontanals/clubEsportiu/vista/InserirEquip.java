@@ -260,11 +260,11 @@ public class InserirEquip extends javax.swing.JFrame {
     }
 
     if (rbFemeni.isSelected()) {
-        tipus = 'D'; // Dona
+        tipus = 'D'; 
     } else if (rbMasculi.isSelected()) {
-        tipus = 'H'; // Home
+        tipus = 'H'; 
     } else if (rbMix.isSelected()) {
-        tipus = 'M'; // Mixt
+        tipus = 'M'; 
     } else {
         JOptionPane.showMessageDialog(this, "Cal seleccionar un tipus de sexe per a l'equip.", "Error", JOptionPane.ERROR_MESSAGE);
         return;
@@ -298,9 +298,10 @@ public class InserirEquip extends javax.swing.JFrame {
    
     try {
         capaOracleJDBC.afegirEquip(e); 
-//        capaOracleJDBC.confirmarCanvis();
+        capaOracleJDBC.confirmarCanvis();
         JOptionPane.showMessageDialog(this, "Equip afegit correctament!", "Èxit", JOptionPane.INFORMATION_MESSAGE);
         fGestio.setVisible(true);
+        fGestio.cercarEquips();
         this.dispose();
     } catch (GestorBDClubEsportiuException ex) {
         Logger.getLogger(InserirEquip.class.getName()).log(Level.SEVERE, null, ex);
