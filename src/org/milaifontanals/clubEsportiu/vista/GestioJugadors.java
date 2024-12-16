@@ -80,24 +80,7 @@ public class GestioJugadors extends javax.swing.JFrame {
             TableColumn idColumn = tableJugador.getColumnModel().getColumn(5);
             tableJugador.removeColumn(idColumn);
             tableJugador.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-//        TableCellRenderer renderizadorConBorde = new DefaultTableCellRenderer() {
-//    @Override
-//    public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
-//        Component c = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
-//
-//        // Aplicar borde negro a cada celda
-//        if (c instanceof JLabel) {
-//            ((JLabel) c).setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
-//        }
-//
-//        return c;
-//    }
-//};
 
-// Asignar el renderizador personalizado a todas las columnas de la tabla
-//for (int i = 0; i < jTable1.getColumnCount(); i++) {
-//    jTable1.getColumnModel().getColumn(i).setCellRenderer(renderizadorConBorde);
-//}
         } catch (GestorBDClubEsportiuException ex) {
             Logger.getLogger(GestioJugadors.class.getName()).log(Level.SEVERE, null, ex);
         }

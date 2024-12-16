@@ -271,7 +271,7 @@ public class InserirEquip extends javax.swing.JFrame {
     }
 
     try {
-        e = capaOracleJDBC.obtenirEquipPerTemporada(nomEquip, temp);
+        e = capaOracleJDBC.obtenirEquipPerNomITemporada(nomEquip, temp);
     } catch (GestorBDClubEsportiuException ex) {
         Logger.getLogger(InserirEquip.class.getName()).log(Level.SEVERE, null, ex);
     }

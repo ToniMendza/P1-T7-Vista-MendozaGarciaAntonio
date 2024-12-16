@@ -62,7 +62,6 @@ public class Login extends javax.swing.JFrame {
         txtUsuari = new javax.swing.JTextField();
         txtContrasenya = new javax.swing.JTextField();
         btneEnviar = new javax.swing.JButton();
-        lblRecuperaCOntrasenya = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         lblLogo = new javax.swing.JLabel();
 
@@ -93,18 +92,6 @@ public class Login extends javax.swing.JFrame {
             }
         });
 
-        Font font = lblRecuperaCOntrasenya.getFont();
-        Map<TextAttribute, Object> attributes = new HashMap<>(font.getAttributes());
-        attributes.put(TextAttribute.UNDERLINE, TextAttribute.UNDERLINE_ON);
-        lblRecuperaCOntrasenya.setFont(font.deriveFont(attributes));
-        lblRecuperaCOntrasenya.setForeground(new java.awt.Color(0, 153, 255));
-        lblRecuperaCOntrasenya.setText("Recuperar Contrasenya");
-        lblRecuperaCOntrasenya.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                lblRecuperaCOntrasenyaMouseClicked(evt);
-            }
-        });
-
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -117,16 +104,13 @@ public class Login extends javax.swing.JFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(57, 57, 57)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(lblRecuperaCOntrasenya)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(lblConstrasenya)
-                                    .addComponent(lblUsuari))
-                                .addGap(37, 37, 37)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(btneEnviar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(txtUsuari, javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(txtContrasenya, javax.swing.GroupLayout.Alignment.TRAILING))))))
+                            .addComponent(lblConstrasenya)
+                            .addComponent(lblUsuari))
+                        .addGap(37, 37, 37)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(btneEnviar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(txtUsuari, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(txtContrasenya, javax.swing.GroupLayout.Alignment.TRAILING))))
                 .addContainerGap(102, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -144,8 +128,6 @@ public class Login extends javax.swing.JFrame {
                     .addComponent(txtContrasenya, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(25, 25, 25)
                 .addComponent(btneEnviar)
-                .addGap(26, 26, 26)
-                .addComponent(lblRecuperaCOntrasenya)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -227,10 +209,6 @@ public class Login extends javax.swing.JFrame {
 
     }//GEN-LAST:event_btneEnviarActionPerformed
 
-    private void lblRecuperaCOntrasenyaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblRecuperaCOntrasenyaMouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_lblRecuperaCOntrasenyaMouseClicked
-
     /**
      * @param args the command line arguments
      */
@@ -285,7 +263,6 @@ try {
     private javax.swing.JLabel lblConstrasenya;
     private javax.swing.JLabel lblInici;
     private javax.swing.JLabel lblLogo;
-    private javax.swing.JLabel lblRecuperaCOntrasenya;
     private javax.swing.JLabel lblUsuari;
     private javax.swing.JTextField txtContrasenya;
     private javax.swing.JTextField txtUsuari;

@@ -4,6 +4,7 @@ import java.awt.Font;
 import java.awt.font.TextAttribute;
 import java.time.LocalDate;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
@@ -38,6 +39,7 @@ public class FitxaEquip extends javax.swing.JFrame {
     private List<Jugador> jugadoresEquipo;
     private List<Jugador> jugadorsDisponibles;
     private GestioEquips fGestioEquips;
+    private List<Categoria> llCategories;
 
     /**
      * Creates new form GestioPlantilla
@@ -47,6 +49,7 @@ public class FitxaEquip extends javax.swing.JFrame {
         this.capaOracleJDBC = capa;
         this.equip = e;
         this.fGestioEquips = f;
+        lblFormatNif.setVisible(false);
         try {
             String titolEquip = e.getNom() + "-" + obtenirTipus(e.getTipus()) + "-" + capaOracleJDBC.obtenirNomCategoriaPerId(e.getIdCategoria());
             lblCatNom.setText(titolEquip);
@@ -55,16 +58,24 @@ public class FitxaEquip extends javax.swing.JFrame {
         }
 
         try {
+            llCategories = capaOracleJDBC.obtenirCategories("");
+            comboCategoria.addItem(new Categoria());
+            for (Iterator<Categoria> iterator = llCategories.iterator(); iterator.hasNext();) {
+                Categoria next = iterator.next();
+                comboCategoria.addItem(next);
+
+            }
             carregarDadesJugadorsEquip();
-            carregarDadesJugadorsSenseEquip();
+            jugadorsDisponibles = capaOracleJDBC.obtenirJugadorsDisponiblesAmbFiltres(this.equip.getId(), this.equip.getIdAny(), null, null, 0);
+
+            carregarDadesJugadorsSenseEquip(jugadorsDisponibles);
         } catch (GestorBDClubEsportiuException ex) {
             Logger.getLogger(FitxaEquip.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
-    private void carregarDadesJugadorsSenseEquip() throws GestorBDClubEsportiuException {
-        jugadorsDisponibles = capaOracleJDBC.obtenirJugadorsDisponibles(this.equip.getId(), this.equip.getIdAny());
-        omplirTaulaJugadorsSenseEquip(jugadorsDisponibles);
+    private void carregarDadesJugadorsSenseEquip(List<Jugador> jugDisponibles) throws GestorBDClubEsportiuException {
+        omplirTaulaJugadorsSenseEquip(jugDisponibles);
 
         // Verificar que la columna 3 aún existe antes de intentar eliminarla
         if (tbJugDisponible.getColumnModel().getColumnCount() > 3) {
@@ -190,6 +201,8 @@ public class FitxaEquip extends javax.swing.JFrame {
         jLabel6 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         comboCategoria = new javax.swing.JComboBox<>();
+        btnCercar = new javax.swing.JButton();
+        lblFormatNif = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Gestió Plantilla");
@@ -280,6 +293,17 @@ public class FitxaEquip extends javax.swing.JFrame {
             }
         });
 
+        btnCercar.setText("Cercar");
+        btnCercar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCercarActionPerformed(evt);
+            }
+        });
+
+        lblFormatNif.setFont(new java.awt.Font("Segoe UI", 1, 10)); // NOI18N
+        lblFormatNif.setForeground(new java.awt.Color(255, 0, 51));
+        lblFormatNif.setText("NIF Incorrecte");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -290,11 +314,13 @@ public class FitxaEquip extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(125, 125, 125)
                         .addComponent(jLabel4))
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 314, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(29, 29, 29)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(btnEsborrar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnAfegeix, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 314, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 29, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(btnEsborrar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnAfegeix, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnCercar, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 314, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -328,7 +354,9 @@ public class FitxaEquip extends javax.swing.JFrame {
                                     .addComponent(txtNif, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addGroup(layout.createSequentialGroup()
                                         .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(156, 156, 156)))))))
+                                        .addGap(156, 156, 156)))))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(lblFormatNif, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -345,7 +373,8 @@ public class FitxaEquip extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 7, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtNif, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel6))
+                    .addComponent(jLabel6)
+                    .addComponent(lblFormatNif))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(comboCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -362,10 +391,12 @@ public class FitxaEquip extends javax.swing.JFrame {
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(btnCercar)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(btnAfegeix)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(btnEsborrar)
-                        .addGap(105, 105, 105)))
+                        .addGap(67, 67, 67)))
                 .addComponent(tornarEnrere, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
@@ -404,7 +435,9 @@ public class FitxaEquip extends javax.swing.JFrame {
             capaOracleJDBC.confirmarCanvis();
             JOptionPane.showMessageDialog(null, "El jugador s'ha incorporat a l'equip correctament.");
             carregarDadesJugadorsEquip();
-            carregarDadesJugadorsSenseEquip();
+
+            jugadorsDisponibles = capaOracleJDBC.obtenirJugadorsDisponiblesAmbFiltres(this.equip.getId(), this.equip.getIdAny(), null, null, 0);
+            carregarDadesJugadorsSenseEquip(jugadorsDisponibles);
         } catch (GestorBDClubEsportiuException ex) {
             Logger.getLogger(FitxaEquip.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ExceptionClub ex) {
@@ -437,6 +470,7 @@ public class FitxaEquip extends javax.swing.JFrame {
     private void btnEsborrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEsborrarActionPerformed
         Jugador j = obtenirJugadorEquipActual();
         Membre mEquip;
+        
         if (j == null) {
             JOptionPane.showMessageDialog(this, "No has seleccionat cap jugador per afegir l'equip",
                     "Error de selecció de jugadors", JOptionPane.ERROR_MESSAGE);
@@ -448,13 +482,50 @@ public class FitxaEquip extends javax.swing.JFrame {
             capaOracleJDBC.confirmarCanvis();
             JOptionPane.showMessageDialog(null, "Jugador eliminat del equip correctament.");
             carregarDadesJugadorsEquip();
-            carregarDadesJugadorsSenseEquip();
+
+            jugadorsDisponibles = capaOracleJDBC.obtenirJugadorsDisponiblesAmbFiltres(this.equip.getId(), this.equip.getIdAny(), null, null, 0);
+            carregarDadesJugadorsSenseEquip(jugadorsDisponibles);
         } catch (GestorBDClubEsportiuException ex) {
             Logger.getLogger(FitxaEquip.class.getName()).log(Level.SEVERE, null, ex);
         }
 
 
     }//GEN-LAST:event_btnEsborrarActionPerformed
+
+    private void btnCercarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCercarActionPerformed
+        Categoria categoriaSeleccionada = (Categoria) comboCategoria.getSelectedItem();
+        int idCategoria = 0;
+        String nomEquip = null;
+        String nif = null;
+        lblFormatNif.setVisible(false);
+        int ordreJugadors;
+
+        if (categoriaSeleccionada != null) {
+            idCategoria = categoriaSeleccionada.getId();
+
+        }
+        if (!txtNom.getText().isEmpty()) {
+            nomEquip = txtNom.getText().trim();
+        }
+        if (!txtNif.getText().isEmpty()) {
+            if (txtNif.getText().trim().matches("^\\d{8}[A-Za-z]$")) {
+                nif = txtNif.getText().trim();
+            } else {
+                lblFormatNif.setVisible(true);
+                return;
+            }
+        }
+        try {
+            jugadorsDisponibles = capaOracleJDBC.obtenirJugadorsDisponiblesAmbFiltres(this.equip.getId(), this.equip.getIdAny(), nomEquip, nif, idCategoria);
+            carregarDadesJugadorsSenseEquip(jugadorsDisponibles);
+        } catch (GestorBDClubEsportiuException ex) {
+            Logger.getLogger(FitxaEquip.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        
+
+
+    }//GEN-LAST:event_btnCercarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -493,6 +564,7 @@ public class FitxaEquip extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAfegeix;
+    private javax.swing.JButton btnCercar;
     private javax.swing.JButton btnEsborrar;
     private javax.swing.JComboBox<Categoria > comboCategoria;
     private javax.swing.JLabel jLabel1;
@@ -503,6 +575,7 @@ public class FitxaEquip extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JLabel lblCatNom;
+    private javax.swing.JLabel lblFormatNif;
     private javax.swing.JTable tbJugDisponible;
     private javax.swing.JTable tbJugEquip;
     private javax.swing.JLabel tbJugadorsEquip;
@@ -511,43 +584,4 @@ public class FitxaEquip extends javax.swing.JFrame {
     private javax.swing.JTextField txtNom;
     // End of variables declaration//GEN-END:variables
 
-//    private void CargarJugadores() throws GestorBDClubEsportiuException {
-//        jugadoresEquipo = capaOracleJDBC.obtenirJugadorsPerIdEquip(this.equip.getId());
-//        omplirTaula(jugadoresEquipo);
-//
-////        for (Jugador j : jugadores) {
-////            j.setTitular(capaOracleJDBC.esTitular(j.getId(), this.equip.getId()));
-////            j.setCategoria(this.equip.getIdAny());
-////        }
-////        
-////        
-////        List<Jugador> jugadores = capaOracleJDBC.obtenirJugadorsNoIdEquip(this.equip.getId());
-//    }
-//    public void omplirTaula(List<Jugador> jugadors) {
-//        DefaultTableModel model = (DefaultTableModel) tbJugEquip.getModel();
-//
-//        model.setRowCount(0);
-//
-//        for (Jugador j : jugadors) {
-//            model.addRow(new Object[]{
-//                j.getIdLegal(),
-//                j.getNom(),
-//                j.getTitularitat(),
-//                j.getId()
-//            });
-//        }
-//        tbJugEquip.getSelectionModel().addListSelectionListener(event -> {
-//            if (!event.getValueIsAdjusting()) {
-//                int selectedRow = tbJugEquip.getSelectedRow();
-//                if (selectedRow != -1) {
-//                    int modelRow = tbJugEquip.convertRowIndexToModel(selectedRow); // obtener el valor de la columna oculta, en lugar de usar el índice visual de la tabla.
-//                    Object idValue = ((DefaultTableModel) tbJugEquip.getModel()).getValueAt(modelRow, 4); // Índice en el modelo
-//
-//                    idJugador = Integer.parseInt(idValue.toString());
-//                    System.out.println("ID seleccionat: " + idJugador);
-//
-//                }
-//            }
-//        });
-//    }
 }

@@ -68,19 +68,14 @@
                       <Group type="102" alignment="0" attributes="0">
                           <EmptySpace min="-2" pref="57" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="1" attributes="0">
-                              <Component id="lblRecuperaCOntrasenya" min="-2" max="-2" attributes="0"/>
-                              <Group type="102" attributes="0">
-                                  <Group type="103" groupAlignment="1" attributes="0">
-                                      <Component id="lblConstrasenya" min="-2" max="-2" attributes="0"/>
-                                      <Component id="lblUsuari" min="-2" max="-2" attributes="0"/>
-                                  </Group>
-                                  <EmptySpace min="-2" pref="37" max="-2" attributes="0"/>
-                                  <Group type="103" groupAlignment="0" attributes="0">
-                                      <Component id="btneEnviar" max="32767" attributes="0"/>
-                                      <Component id="txtUsuari" alignment="1" max="32767" attributes="0"/>
-                                      <Component id="txtContrasenya" alignment="1" max="32767" attributes="0"/>
-                                  </Group>
-                              </Group>
+                              <Component id="lblConstrasenya" min="-2" max="-2" attributes="0"/>
+                              <Component id="lblUsuari" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace min="-2" pref="37" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Component id="btneEnviar" max="32767" attributes="0"/>
+                              <Component id="txtUsuari" alignment="1" max="32767" attributes="0"/>
+                              <Component id="txtContrasenya" alignment="1" max="32767" attributes="0"/>
                           </Group>
                       </Group>
                   </Group>
@@ -105,8 +100,6 @@
                   </Group>
                   <EmptySpace min="-2" pref="25" max="-2" attributes="0"/>
                   <Component id="btneEnviar" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace min="-2" pref="26" max="-2" attributes="0"/>
-                  <Component id="lblRecuperaCOntrasenya" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="32767" attributes="0"/>
               </Group>
           </Group>
@@ -151,20 +144,6 @@
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btneEnviarActionPerformed"/>
           </Events>
-        </Component>
-        <Component class="javax.swing.JLabel" name="lblRecuperaCOntrasenya">
-          <Properties>
-            <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-              <Color blue="ff" green="99" red="0" type="rgb"/>
-            </Property>
-            <Property name="text" type="java.lang.String" value="Recuperar Contrasenya"/>
-          </Properties>
-          <Events>
-            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="lblRecuperaCOntrasenyaMouseClicked"/>
-          </Events>
-          <AuxValues>
-            <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="Font font = lblRecuperaCOntrasenya.getFont();&#xd;&#xa;Map&lt;TextAttribute, Object&gt; attributes = new HashMap&lt;&gt;(font.getAttributes());&#xd;&#xa;attributes.put(TextAttribute.UNDERLINE, TextAttribute.UNDERLINE_ON);&#xd;&#xa;lblRecuperaCOntrasenya.setFont(font.deriveFont(attributes));"/>
-          </AuxValues>
         </Component>
       </SubComponents>
     </Container>
