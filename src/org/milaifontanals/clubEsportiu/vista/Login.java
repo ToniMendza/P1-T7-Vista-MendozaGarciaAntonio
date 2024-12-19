@@ -1,16 +1,11 @@
 package org.milaifontanals.clubEsportiu.vista;
 
 
-import com.formdev.flatlaf.FlatDarkLaf;
+
 import com.formdev.flatlaf.FlatLightLaf;
-import java.awt.Font;
-import java.awt.font.TextAttribute;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
-import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import org.milaifontanals.clubEsportiu.model.Usuari;
 import org.milaifontanals.clubEsportiu.persistencia.GestorBDClubEsportiuException;
@@ -27,20 +22,21 @@ import org.milaifontanals.clubEsportiu.persistencia.IGestorBDClubEsportiu;
 public class Login extends javax.swing.JFrame {
 
     private IGestorBDClubEsportiu capaOracleJDBC = null;
-//    private GestorBDClubEsportiuJdbc capaOracleJDBCDos = null;
     static private String nomClassePersistencia = null;
 
     /**
      * Creates new form Login
      */
     public Login() {
+        
         try {
             // Disseny de la interfície
             this.capaOracleJDBC = (IGestorBDClubEsportiu) Class.forName(nomClassePersistencia).newInstance();
         } catch (ClassNotFoundException | InstantiationException | IllegalAccessException ex) {
-            Logger.getLogger(LoginUsuari.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
         }
-        //            this.capaOracleJDBCDos = new GestorBDClubEsportiuJdbc();
+         
+
         System.out.println("Connexio establerta");
         
         initComponents();
@@ -55,6 +51,7 @@ public class Login extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jPanel3 = new javax.swing.JPanel();
         jPanel1 = new javax.swing.JPanel();
         lblInici = new javax.swing.JLabel();
         lblUsuari = new javax.swing.JLabel();
@@ -64,28 +61,45 @@ public class Login extends javax.swing.JFrame {
         btneEnviar = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         lblLogo = new javax.swing.JLabel();
+        lblInici1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("INICI DE SESSIÓ");
+        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 3));
+        jPanel3.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel3.setPreferredSize(new java.awt.Dimension(802, 420));
 
-        lblInici.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
+
+        lblInici.setFont(new java.awt.Font("Roboto", 1, 24)); // NOI18N
+        lblInici.setForeground(new java.awt.Color(0, 102, 102));
         lblInici.setText("INICI DE SESSIÓ");
 
-        lblUsuari.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        lblUsuari.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
+        lblUsuari.setForeground(new java.awt.Color(0, 102, 102));
         lblUsuari.setText("Usuari:");
 
-        lblConstrasenya.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        lblConstrasenya.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
+        lblConstrasenya.setForeground(new java.awt.Color(0, 102, 102));
         lblConstrasenya.setText("Constrasenya:");
 
+        txtUsuari.setFont(new java.awt.Font("Roboto", 2, 12)); // NOI18N
+        txtUsuari.setForeground(new java.awt.Color(0, 102, 102));
+
+        txtContrasenya.setFont(new java.awt.Font("Roboto", 2, 12)); // NOI18N
+        txtContrasenya.setForeground(new java.awt.Color(0, 102, 102));
         txtContrasenya.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtContrasenyaActionPerformed(evt);
             }
         });
 
+        btneEnviar.setBackground(new java.awt.Color(0, 102, 102));
+        btneEnviar.setFont(new java.awt.Font("Roboto Light", 1, 12)); // NOI18N
+        btneEnviar.setForeground(new java.awt.Color(255, 255, 255));
         btneEnviar.setText("Enviar");
+        btneEnviar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btneEnviar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btneEnviarActionPerformed(evt);
@@ -97,28 +111,28 @@ public class Login extends javax.swing.JFrame {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGap(59, 59, 59)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(89, 89, 89)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(lblInici))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(57, 57, 57)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(lblConstrasenya)
                             .addComponent(lblUsuari))
                         .addGap(37, 37, 37)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(btneEnviar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(txtUsuari, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(txtContrasenya, javax.swing.GroupLayout.Alignment.TRAILING))))
-                .addContainerGap(102, Short.MAX_VALUE))
+                            .addComponent(txtUsuari, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 1, Short.MAX_VALUE)
+                            .addComponent(txtContrasenya, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))))
+                .addGap(108, 108, 108))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(36, 36, 36)
                 .addComponent(lblInici)
-                .addGap(49, 49, 49)
+                .addGap(55, 55, 55)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblUsuari)
                     .addComponent(txtUsuari, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -128,51 +142,63 @@ public class Login extends javax.swing.JFrame {
                     .addComponent(txtContrasenya, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(25, 25, 25)
                 .addComponent(btneEnviar)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(202, Short.MAX_VALUE))
         );
 
-        jPanel2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 3));
+        jPanel2.setBackground(new java.awt.Color(0, 102, 102));
+        jPanel2.setToolTipText("");
 
         lblLogo.setIcon(new javax.swing.ImageIcon("C:\\Users\\isard\\Desktop\\FOTOS-bd\\7517242-Red.jpg")); // NOI18N
         lblLogo.setMaximumSize(new java.awt.Dimension(2000, 2000));
+
+        lblInici1.setFont(new java.awt.Font("Roboto", 1, 24)); // NOI18N
+        lblInici1.setForeground(new java.awt.Color(255, 255, 255));
+        lblInici1.setText("CLUB ESPORTIU");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(lblLogo, javax.swing.GroupLayout.DEFAULT_SIZE, 352, Short.MAX_VALUE)
-                .addContainerGap())
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(110, 110, 110)
+                        .addComponent(lblInici1))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(27, 27, 27)
+                        .addComponent(lblLogo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(28, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(lblLogo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+                .addGap(33, 33, 33)
+                .addComponent(lblInici1)
+                .addGap(18, 18, 18)
+                .addComponent(lblLogo, javax.swing.GroupLayout.PREFERRED_SIZE, 237, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(118, Short.MAX_VALUE))
         );
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 49, Short.MAX_VALUE)
-                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(15, 15, 15))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(39, 39, 39)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(53, Short.MAX_VALUE))
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(0, 0, Short.MAX_VALUE))
         );
+
+        getContentPane().add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
         pack();
         setLocationRelativeTo(null);
@@ -198,9 +224,6 @@ public class Login extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Error. El nom o la contrasenya son incorrectes", "Error", JOptionPane.ERROR_MESSAGE);
             return;
         } else {
-
-            
- 
             FinestraLogin finestraLogin = new FinestraLogin(usu,capaOracleJDBC);
             finestraLogin.setVisible(true); 
             this.dispose(); 
@@ -219,30 +242,7 @@ try {
     Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex); // Incluye 'ex' para registrar el error
 }
  
-//        /* Set the Nimbus look and feel */
-//        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-//        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-//         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-//         */
-//        try {
-//            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-//                if ("Nimbus".equals(info.getName())) {
-//                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-//                    break;
-//                }
-//            }
-//        } catch (ClassNotFoundException ex) {
-//            java.util.logging.Logger.getLogger(Login.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-//        } catch (InstantiationException ex) {
-//            java.util.logging.Logger.getLogger(Login.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-//        } catch (IllegalAccessException ex) {
-//            java.util.logging.Logger.getLogger(Login.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-//        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-//            java.util.logging.Logger.getLogger(Login.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-//        }
-//        //</editor-fold>
 
-//        /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 if (args.length == 0) {
@@ -260,8 +260,10 @@ try {
     private javax.swing.JButton btneEnviar;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
     private javax.swing.JLabel lblConstrasenya;
     private javax.swing.JLabel lblInici;
+    private javax.swing.JLabel lblInici1;
     private javax.swing.JLabel lblLogo;
     private javax.swing.JLabel lblUsuari;
     private javax.swing.JTextField txtContrasenya;
