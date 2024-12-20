@@ -27,6 +27,7 @@ public class FinestraLogin extends javax.swing.JFrame {
 
     private IGestorBDClubEsportiu capaOracleJDBC = null;
     private Usuari usu = null;
+   
 
     /**
      * Creates new form FinestraLogin
