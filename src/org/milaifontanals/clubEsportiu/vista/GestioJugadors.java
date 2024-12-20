@@ -1,31 +1,20 @@
 package org.milaifontanals.clubEsportiu.vista;
 
-import java.awt.Color;
-import java.awt.Component;
 import java.awt.Font;
 import java.awt.font.TextAttribute;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.sql.Date;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.BorderFactory;
-import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
-import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableModel;
 import javax.xml.stream.XMLOutputFactory;
@@ -423,12 +412,7 @@ public class GestioJugadors extends javax.swing.JFrame {
     }//GEN-LAST:event_rbNaixementActionPerformed
 
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
-//select count(*) from membre where id_equip in (select id from equip where id_any=2024) and id_jugador=10;
-//
-//select * from membre m join equip e on m.id_equip=e.id where e.id_any=2024 and id_jugador=10;
-//
-//select * from membre m join equip e on m.id_equip=e.id;
-//select * from jugador;
+
 
         try {
             // Recuperar el ID desde el modelo (columna 5 en este caso)
@@ -437,7 +421,7 @@ public class GestioJugadors extends javax.swing.JFrame {
                 InserirModificarJugador log = new InserirModificarJugador(id, capaOracleJDBC, temp, this);
                 log.setVisible(true);
                 this.setVisible(false);
-//                System.out.println("Jugador seleccionado: " + id);
+
             } else {
                 lblInserir.setVisible(true);
                 System.out.println("No se ha seleccionado ninguna fila.");
@@ -453,14 +437,14 @@ public class GestioJugadors extends javax.swing.JFrame {
     private int obtenirIDJugador() {
         int selectedRow = tableJugador.getSelectedRow();
         if (selectedRow == -1) {
-            return -1; // No se seleccionó ninguna fila
+            return -1; 
         }
 
         int modelRow = tableJugador.convertRowIndexToModel(selectedRow);
         TableModel model = tableJugador.getModel();
 
         try {
-            return (int) model.getValueAt(modelRow, ID_JUGADOR_INDEX); // Obtén el ID
+            return (int) model.getValueAt(modelRow, ID_JUGADOR_INDEX); 
         } catch (ClassCastException | ArrayIndexOutOfBoundsException e) {
             System.out.println("Error al recuperar el ID del jugador: " + e.getMessage());
             return -1; // Devuelve un valor inválido en caso de error

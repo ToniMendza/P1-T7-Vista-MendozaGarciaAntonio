@@ -3,9 +3,6 @@ package org.milaifontanals.clubEsportiu.vista;
 
 import java.awt.Font;
 import java.awt.font.TextAttribute;
-import java.time.LocalDate;
-import java.time.ZoneId;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -16,7 +13,6 @@ import javax.swing.JOptionPane;
 import org.milaifontanals.clubEsportiu.model.Categoria;
 import org.milaifontanals.clubEsportiu.model.Equip;
 import org.milaifontanals.clubEsportiu.model.ExceptionClub;
-import org.milaifontanals.clubEsportiu.model.Jugador;
 import org.milaifontanals.clubEsportiu.model.Temporada;
 import org.milaifontanals.clubEsportiu.persistencia.GestorBDClubEsportiuException;
 import org.milaifontanals.clubEsportiu.persistencia.IGestorBDClubEsportiu;

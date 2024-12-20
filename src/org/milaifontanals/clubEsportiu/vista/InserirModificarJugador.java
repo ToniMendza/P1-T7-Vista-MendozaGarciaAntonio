@@ -3,9 +3,7 @@ package org.milaifontanals.clubEsportiu.vista;
 import java.awt.Font;
 import java.awt.Image;
 import java.awt.font.TextAttribute;
-import java.awt.image.BufferedImage;
 import java.io.File;
-import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.Date;
 import java.util.HashMap;
@@ -15,7 +13,6 @@ import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
-import org.milaifontanals.clubEsportiu.model.ExceptionClub;
 import org.milaifontanals.clubEsportiu.model.Jugador;
 import org.milaifontanals.clubEsportiu.model.Temporada;
 import org.milaifontanals.clubEsportiu.persistencia.GestorBDClubEsportiuException;
@@ -37,7 +34,7 @@ public class InserirModificarJugador extends javax.swing.JFrame {
     private Jugador jugadorOriginal;
     private Temporada temp;
     private GestioJugadors fJugador;
-    private String rutaFotoSeleccionada=null;
+    private String rutaFotoSeleccionada = null;
 
     /**
      * Creates new form IntroduirModificarJugador
@@ -123,10 +120,10 @@ public class InserirModificarJugador extends javax.swing.JFrame {
         jLabel8 = new javax.swing.JLabel();
         rbHome = new javax.swing.JRadioButton();
         rbDona = new javax.swing.JRadioButton();
-        btnInserir = new javax.swing.JButton();
         tornarEnrere = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         jPanel3 = new javax.swing.JPanel();
+        btnInserir = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -140,7 +137,7 @@ public class InserirModificarJugador extends javax.swing.JFrame {
         jLabel2.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(0, 102, 102));
         jLabel2.setText("Nom: ");
-        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 100, -1, 20));
+        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 70, -1, 20));
 
         txtNom.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
         txtNom.setForeground(new java.awt.Color(0, 102, 102));
@@ -149,27 +146,27 @@ public class InserirModificarJugador extends javax.swing.JFrame {
                 txtNomActionPerformed(evt);
             }
         });
-        jPanel1.add(txtNom, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 100, 276, -1));
+        jPanel1.add(txtNom, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 70, 276, -1));
 
         txtCognom.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
         txtCognom.setForeground(new java.awt.Color(0, 102, 102));
-        jPanel1.add(txtCognom, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 130, 276, -1));
+        jPanel1.add(txtCognom, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 100, 276, -1));
 
         jLabel3.setBackground(new java.awt.Color(0, 102, 102));
         jLabel3.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(0, 102, 102));
         jLabel3.setText("Cognom:");
-        jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 126, -1, 30));
+        jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 100, -1, 30));
 
         jLabel4.setBackground(new java.awt.Color(0, 102, 102));
         jLabel4.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(0, 102, 102));
         jLabel4.setText("Revisió(SI/NO):");
-        jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 160, -1, 20));
+        jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 130, -1, 20));
 
         txtFiRevisio.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
         txtFiRevisio.setForeground(new java.awt.Color(0, 102, 102));
-        jPanel1.add(txtFiRevisio, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 160, 276, -1));
+        jPanel1.add(txtFiRevisio, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 130, 276, -1));
 
         txtIdLegal.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
         txtIdLegal.setForeground(new java.awt.Color(0, 102, 102));
@@ -178,33 +175,33 @@ public class InserirModificarJugador extends javax.swing.JFrame {
                 txtIdLegalActionPerformed(evt);
             }
         });
-        jPanel1.add(txtIdLegal, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 190, 276, -1));
+        jPanel1.add(txtIdLegal, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 160, 276, -1));
 
         jLabel5.setBackground(new java.awt.Color(0, 102, 102));
         jLabel5.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(0, 102, 102));
         jLabel5.setText("Id Legal");
-        jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 190, -1, 20));
+        jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 160, -1, 20));
 
         txtIban.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
         txtIban.setForeground(new java.awt.Color(0, 102, 102));
-        jPanel1.add(txtIban, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 220, 276, -1));
+        jPanel1.add(txtIban, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 190, 276, -1));
 
         txtAdreca.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
         txtAdreca.setForeground(new java.awt.Color(0, 102, 102));
-        jPanel1.add(txtAdreca, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 250, 276, -1));
+        jPanel1.add(txtAdreca, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 220, 276, -1));
 
         jLabel7.setBackground(new java.awt.Color(0, 102, 102));
         jLabel7.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
         jLabel7.setForeground(new java.awt.Color(0, 102, 102));
         jLabel7.setText("IBAN:");
-        jPanel1.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 220, 50, 20));
+        jPanel1.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 190, 50, 20));
 
         jLabel6.setBackground(new java.awt.Color(0, 102, 102));
         jLabel6.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
         jLabel6.setForeground(new java.awt.Color(0, 102, 102));
         jLabel6.setText("Adreça:");
-        jPanel1.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 250, 50, 20));
+        jPanel1.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 220, 50, 20));
 
         btFoto.setBackground(new java.awt.Color(0, 102, 102));
         btFoto.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
@@ -215,40 +212,40 @@ public class InserirModificarJugador extends javax.swing.JFrame {
                 btFotoActionPerformed(evt);
             }
         });
-        jPanel1.add(btFoto, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 230, 169, -1));
+        jPanel1.add(btFoto, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 200, 169, -1));
 
         txtCodiPostal.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
         txtCodiPostal.setForeground(new java.awt.Color(0, 102, 102));
-        jPanel1.add(txtCodiPostal, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 280, 276, -1));
+        jPanel1.add(txtCodiPostal, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 250, 276, -1));
 
         jLabel10.setBackground(new java.awt.Color(0, 102, 102));
         jLabel10.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
         jLabel10.setForeground(new java.awt.Color(0, 102, 102));
         jLabel10.setText("Codi Postal:");
-        jPanel1.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 280, 79, 20));
+        jPanel1.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 250, 79, 20));
 
         txtPoblacio.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
         txtPoblacio.setForeground(new java.awt.Color(0, 102, 102));
-        jPanel1.add(txtPoblacio, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 310, 276, -1));
+        jPanel1.add(txtPoblacio, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 280, 276, -1));
 
         jLabel11.setBackground(new java.awt.Color(0, 102, 102));
         jLabel11.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
         jLabel11.setForeground(new java.awt.Color(0, 102, 102));
         jLabel11.setText("Població:");
-        jPanel1.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 310, -1, -1));
-        jPanel1.add(txtNaix, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 340, 276, -1));
+        jPanel1.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 280, -1, -1));
+        jPanel1.add(txtNaix, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 310, 276, -1));
 
         jLabel9.setBackground(new java.awt.Color(0, 102, 102));
         jLabel9.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
         jLabel9.setForeground(new java.awt.Color(0, 102, 102));
         jLabel9.setText("Data Naixement:");
-        jPanel1.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 340, 99, -1));
-        jPanel1.add(lblFoto, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 100, 180, 120));
+        jPanel1.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 310, 99, -1));
+        jPanel1.add(lblFoto, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 70, 180, 120));
 
         jLabel8.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
         jLabel8.setForeground(new java.awt.Color(0, 102, 102));
         jLabel8.setText("Sexe:");
-        jPanel1.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 310, 37, 20));
+        jPanel1.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 280, 37, 20));
 
         buttonGroup1.add(rbHome);
         rbHome.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
@@ -259,24 +256,13 @@ public class InserirModificarJugador extends javax.swing.JFrame {
                 rbHomeActionPerformed(evt);
             }
         });
-        jPanel1.add(rbHome, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 310, -1, -1));
+        jPanel1.add(rbHome, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 280, -1, -1));
 
         buttonGroup1.add(rbDona);
         rbDona.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
         rbDona.setForeground(new java.awt.Color(0, 102, 102));
         rbDona.setText("Dona");
-        jPanel1.add(rbDona, new org.netbeans.lib.awtextra.AbsoluteConstraints(700, 310, -1, -1));
-
-        btnInserir.setBackground(new java.awt.Color(0, 102, 102));
-        btnInserir.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
-        btnInserir.setForeground(new java.awt.Color(255, 255, 255));
-        btnInserir.setText("Inserir/Modificar");
-        btnInserir.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnInserirActionPerformed(evt);
-            }
-        });
-        jPanel1.add(btnInserir, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 390, -1, -1));
+        jPanel1.add(rbDona, new org.netbeans.lib.awtextra.AbsoluteConstraints(700, 280, -1, -1));
 
         tornarEnrere.setBackground(new java.awt.Color(0, 102, 102));
         tornarEnrere.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
@@ -293,22 +279,38 @@ public class InserirModificarJugador extends javax.swing.JFrame {
                 tornarEnrereMouseClicked(evt);
             }
         });
-        jPanel1.add(tornarEnrere, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 390, -1, 25));
+        jPanel1.add(tornarEnrere, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 360, -1, 25));
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
 
         jPanel3.setBackground(new java.awt.Color(255, 255, 255));
         jPanel3.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 102, 102), 3, true));
 
+        btnInserir.setBackground(new java.awt.Color(0, 102, 102));
+        btnInserir.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
+        btnInserir.setForeground(new java.awt.Color(255, 255, 255));
+        btnInserir.setText("Inserir/Modificar");
+        btnInserir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnInserirActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnInserir, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(30, 30, 30))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 340, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                .addContainerGap(301, Short.MAX_VALUE)
+                .addComponent(btnInserir)
+                .addGap(17, 17, 17))
         );
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
@@ -336,19 +338,17 @@ public class InserirModificarJugador extends javax.swing.JFrame {
                 .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 40, 770, 390));
+        jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 10, 770, 390));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 808, Short.MAX_VALUE)
-                .addContainerGap())
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 820, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 449, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 430, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         pack();
@@ -406,19 +406,30 @@ public class InserirModificarJugador extends javax.swing.JFrame {
         //Per inserir
         if (jugadorId == 0) {
             try {
+                if (capaOracleJDBC.validarIdLegalExistent(jugador)) {
+                    JOptionPane.showMessageDialog(null, "El id_legal ja existeix a la base de dades. Si us plau, utilitzi un altre id_legal.",
+                            "Error", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
                 capaOracleJDBC.afegirJugador(jugador);
-
 
                 JOptionPane.showMessageDialog(null, "Jugador inserit correctament");
                 capaOracleJDBC.confirmarCanvis();
             } catch (GestorBDClubEsportiuException ex) {
                 JOptionPane.showMessageDialog(null, "Error al insertar el jugador: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-                ex.printStackTrace();
+
             }
             //Per modficiar
         } else {
             try {
 
+                boolean canviIdLegal = !jugadorOriginal.getIdLegal().equals(jugador.getIdLegal());
+
+                if (canviIdLegal && capaOracleJDBC.validarIdLegalExistent(jugador)) {
+                    JOptionPane.showMessageDialog(null, "El id_legal ja existeix a la base de dades. Si us plau, utilitzi un altre id_legal.",
+                            "Error", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
                 boolean canviSexe = jugadorOriginal.getSexe() != jugador.getSexe();
                 boolean canviNaixement = !jugadorOriginal.getDataNaixement().equals(jugador.getDataNaixement());
                 boolean senseEquip = capaOracleJDBC.jugadorSenseEquip(jugador);
@@ -441,7 +452,7 @@ public class InserirModificarJugador extends javax.swing.JFrame {
 
             } catch (GestorBDClubEsportiuException ex) {
                 JOptionPane.showMessageDialog(null, "Error al modificar el jugador: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-                ex.printStackTrace();
+                
             }
         }
 

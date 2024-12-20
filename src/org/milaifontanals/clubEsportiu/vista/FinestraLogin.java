@@ -94,7 +94,6 @@ public class FinestraLogin extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         comboTemporada = new javax.swing.JComboBox<>();
-        btnEsbTemporada = new javax.swing.JButton();
         btnAfTemporada = new javax.swing.JButton();
         txtTemporada = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
@@ -131,8 +130,8 @@ public class FinestraLogin extends javax.swing.JFrame {
         jLabel1.setText("Dades Usuari");
         jPanel4.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 30, 262, -1));
 
-        jPanel3.setBackground(new java.awt.Color(0, 102, 102));
-        jPanel3.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 3, true));
+        jPanel3.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel3.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 102, 102), 3, true));
 
         comboTemporada.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
         comboTemporada.setForeground(new java.awt.Color(0, 102, 102));
@@ -144,17 +143,9 @@ public class FinestraLogin extends javax.swing.JFrame {
             }
         });
 
-        btnEsbTemporada.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
-        btnEsbTemporada.setForeground(new java.awt.Color(0, 102, 102));
-        btnEsbTemporada.setText("Esborrar Temporada");
-        btnEsbTemporada.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnEsbTemporadaActionPerformed(evt);
-            }
-        });
-
+        btnAfTemporada.setBackground(new java.awt.Color(0, 102, 102));
         btnAfTemporada.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
-        btnAfTemporada.setForeground(new java.awt.Color(0, 102, 102));
+        btnAfTemporada.setForeground(new java.awt.Color(255, 255, 255));
         btnAfTemporada.setText("Afegir Temporada");
         btnAfTemporada.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -201,19 +192,15 @@ public class FinestraLogin extends javax.swing.JFrame {
                         .addComponent(jLabel7)
                         .addGap(189, 189, 189))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(btnAfTemporada, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnEsbTemporada))
+                        .addComponent(btnAfTemporada, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(31, 31, 31))))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addGap(49, 49, 49)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(comboTemporada, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnEsbTemporada))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(comboTemporada, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 67, Short.MAX_VALUE)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtTemporada, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel6)
@@ -227,23 +214,23 @@ public class FinestraLogin extends javax.swing.JFrame {
 
         jPanel4.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 70, -1, 328));
 
-        jPanel1.setBackground(new java.awt.Color(0, 102, 102));
-        jPanel1.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 3, true));
+        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel1.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 102, 102), 4, true));
 
         jLabel2.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel2.setForeground(new java.awt.Color(0, 102, 102));
         jLabel2.setText("Login:");
 
         jLabel3.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
-        jLabel3.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel3.setForeground(new java.awt.Color(0, 102, 102));
         jLabel3.setText("Nom:");
 
         lblLogin.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
-        lblLogin.setForeground(new java.awt.Color(255, 255, 255));
+        lblLogin.setForeground(new java.awt.Color(0, 102, 102));
         lblLogin.setText("jLabel4");
 
         lblNom.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
-        lblNom.setForeground(new java.awt.Color(255, 255, 255));
+        lblNom.setForeground(new java.awt.Color(0, 102, 102));
         lblNom.setText("jLabel4");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -251,7 +238,7 @@ public class FinestraLogin extends javax.swing.JFrame {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(83, 83, 83)
+                .addGap(74, 74, 74)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(6, 6, 6)
@@ -261,7 +248,7 @@ public class FinestraLogin extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(lblLogin)
                     .addComponent(lblNom))
-                .addContainerGap(69, Short.MAX_VALUE))
+                .addContainerGap(73, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -277,13 +264,14 @@ public class FinestraLogin extends javax.swing.JFrame {
                 .addContainerGap(20, Short.MAX_VALUE))
         );
 
-        jPanel4.add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 70, -1, -1));
+        jPanel4.add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 70, 270, -1));
 
-        jPanel2.setBackground(new java.awt.Color(0, 102, 102));
-        jPanel2.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 3, true));
+        jPanel2.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel2.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 102, 102), 3, true));
 
+        btnEquips.setBackground(new java.awt.Color(0, 102, 102));
         btnEquips.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
-        btnEquips.setForeground(new java.awt.Color(0, 102, 102));
+        btnEquips.setForeground(new java.awt.Color(255, 255, 255));
         btnEquips.setText("Gestió Equips");
         btnEquips.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -291,8 +279,9 @@ public class FinestraLogin extends javax.swing.JFrame {
             }
         });
 
+        btnJugadors.setBackground(new java.awt.Color(0, 102, 102));
         btnJugadors.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
-        btnJugadors.setForeground(new java.awt.Color(0, 102, 102));
+        btnJugadors.setForeground(new java.awt.Color(255, 255, 255));
         btnJugadors.setText("Gestió Jugadors");
         btnJugadors.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -382,10 +371,6 @@ public class FinestraLogin extends javax.swing.JFrame {
         this.setVisible(false);
     }//GEN-LAST:event_btnJugadorsActionPerformed
 
-    private void btnEsbTemporadaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEsbTemporadaActionPerformed
-
-    }//GEN-LAST:event_btnEsbTemporadaActionPerformed
-
     private void btnAfTemporadaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAfTemporadaActionPerformed
         List<Temporada> lltemp = null;
         int temp = Integer.parseInt(txtTemporada.getText());
@@ -459,7 +444,6 @@ public class FinestraLogin extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAfTemporada;
     private javax.swing.JButton btnEquips;
-    private javax.swing.JButton btnEsbTemporada;
     private javax.swing.JButton btnJugadors;
     private javax.swing.JComboBox<Temporada > comboTemporada;
     private javax.swing.JLabel jLabel1;

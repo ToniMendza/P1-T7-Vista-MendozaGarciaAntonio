@@ -13,7 +13,6 @@ import javax.swing.JOptionPane;
 import javax.swing.ListSelectionModel;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
-import javax.swing.table.TableModel;
 import org.milaifontanals.clubEsportiu.model.Categoria;
 import org.milaifontanals.clubEsportiu.model.Equip;
 import org.milaifontanals.clubEsportiu.model.ExceptionClub;
@@ -124,7 +123,6 @@ public class FitxaEquip extends javax.swing.JFrame {
                 return (Jugador) jugadorObject;
             }
         }
-        System.out.println("Cap jugador seleccionat.");
         return null;
     }
 
@@ -153,7 +151,6 @@ public class FitxaEquip extends javax.swing.JFrame {
                 return (Jugador) jugadorObject;
             }
         }
-        System.out.println("Cap jugador seleccionat.");
         return null;
     }
 
@@ -525,7 +522,7 @@ public class FitxaEquip extends javax.swing.JFrame {
     private void btnCercarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCercarActionPerformed
         Categoria categoriaSeleccionada = (Categoria) comboCategoria.getSelectedItem();
         int idCategoria = 0;
-        String nomEquip = null;
+        String nomJugador = null;
         String nif = null;
         lblFormatNif.setVisible(false);
         int ordreJugadors;
@@ -535,7 +532,7 @@ public class FitxaEquip extends javax.swing.JFrame {
 
         }
         if (!txtNom.getText().isEmpty()) {
-            nomEquip = txtNom.getText().trim();
+            nomJugador = txtNom.getText().trim().toUpperCase();
         }
         if (!txtNif.getText().isEmpty()) {
             if (txtNif.getText().trim().matches("^\\d{8}[A-Za-z]$")) {
@@ -546,7 +543,7 @@ public class FitxaEquip extends javax.swing.JFrame {
             }
         }
         try {
-            jugadorsDisponibles = capaOracleJDBC.obtenirJugadorsDisponiblesAmbFiltres(this.equip.getId(), this.equip.getIdAny(), nomEquip, nif, idCategoria);
+            jugadorsDisponibles = capaOracleJDBC.obtenirJugadorsDisponiblesAmbFiltres(this.equip.getId(), this.equip.getIdAny(), nomJugador, nif, idCategoria);
             carregarDadesJugadorsSenseEquip(jugadorsDisponibles);
         } catch (GestorBDClubEsportiuException ex) {
             Logger.getLogger(FitxaEquip.class.getName()).log(Level.SEVERE, null, ex);

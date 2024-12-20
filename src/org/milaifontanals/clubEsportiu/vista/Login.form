@@ -76,13 +76,13 @@
             <DimensionLayout dim="0">
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" attributes="0">
-                      <EmptySpace min="-2" pref="59" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="1" attributes="0">
+                      <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" alignment="1" attributes="0">
-                              <EmptySpace pref="41" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="100" max="-2" attributes="0"/>
                               <Component id="lblInici" min="-2" max="-2" attributes="0"/>
                           </Group>
-                          <Group type="102" alignment="1" attributes="0">
+                          <Group type="102" alignment="0" attributes="0">
+                              <EmptySpace min="-2" pref="59" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="1" attributes="0">
                                   <Component id="lblConstrasenya" min="-2" max="-2" attributes="0"/>
                                   <Component id="lblUsuari" min="-2" max="-2" attributes="0"/>
@@ -91,7 +91,7 @@
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Component id="btneEnviar" max="32767" attributes="0"/>
                                   <Component id="txtUsuari" alignment="1" pref="0" max="32767" attributes="0"/>
-                                  <Component id="txtContrasenya" alignment="1" pref="0" max="32767" attributes="0"/>
+                                  <Component id="txtContrasenya" alignment="0" max="32767" attributes="0"/>
                               </Group>
                           </Group>
                       </Group>
@@ -109,12 +109,12 @@
                           <Component id="lblUsuari" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="txtUsuari" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace min="-2" pref="31" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="lblConstrasenya" min="-2" max="-2" attributes="0"/>
-                          <Component id="txtContrasenya" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="28" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="lblConstrasenya" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="txtContrasenya" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace min="-2" pref="25" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="27" max="-2" attributes="0"/>
                       <Component id="btneEnviar" min="-2" max="-2" attributes="0"/>
                       <EmptySpace pref="202" max="32767" attributes="0"/>
                   </Group>
@@ -165,19 +165,6 @@
                 </Property>
               </Properties>
             </Component>
-            <Component class="javax.swing.JTextField" name="txtContrasenya">
-              <Properties>
-                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                  <Font name="Roboto" size="12" style="2"/>
-                </Property>
-                <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                  <Color blue="66" green="66" red="0" type="rgb"/>
-                </Property>
-              </Properties>
-              <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtContrasenyaActionPerformed"/>
-              </Events>
-            </Component>
             <Component class="javax.swing.JButton" name="btneEnviar">
               <Properties>
                 <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
@@ -197,6 +184,13 @@
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btneEnviarActionPerformed"/>
               </Events>
+            </Component>
+            <Component class="javax.swing.JPasswordField" name="txtContrasenya">
+              <Properties>
+                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                  <Font name="Roboto" size="12" style="0"/>
+                </Property>
+              </Properties>
             </Component>
           </SubComponents>
         </Container>

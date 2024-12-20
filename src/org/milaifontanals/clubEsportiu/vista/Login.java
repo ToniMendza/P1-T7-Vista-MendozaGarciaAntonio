@@ -57,8 +57,8 @@ public class Login extends javax.swing.JFrame {
         lblUsuari = new javax.swing.JLabel();
         lblConstrasenya = new javax.swing.JLabel();
         txtUsuari = new javax.swing.JTextField();
-        txtContrasenya = new javax.swing.JTextField();
         btneEnviar = new javax.swing.JButton();
+        txtContrasenya = new javax.swing.JPasswordField();
         jPanel2 = new javax.swing.JPanel();
         lblLogo = new javax.swing.JLabel();
         lblInici1 = new javax.swing.JLabel();
@@ -87,14 +87,6 @@ public class Login extends javax.swing.JFrame {
         txtUsuari.setFont(new java.awt.Font("Roboto", 2, 12)); // NOI18N
         txtUsuari.setForeground(new java.awt.Color(0, 102, 102));
 
-        txtContrasenya.setFont(new java.awt.Font("Roboto", 2, 12)); // NOI18N
-        txtContrasenya.setForeground(new java.awt.Color(0, 102, 102));
-        txtContrasenya.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtContrasenyaActionPerformed(evt);
-            }
-        });
-
         btneEnviar.setBackground(new java.awt.Color(0, 102, 102));
         btneEnviar.setFont(new java.awt.Font("Roboto Light", 1, 12)); // NOI18N
         btneEnviar.setForeground(new java.awt.Color(255, 255, 255));
@@ -106,17 +98,19 @@ public class Login extends javax.swing.JFrame {
             }
         });
 
+        txtContrasenya.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(59, 59, 59)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addGap(100, 100, 100)
                         .addComponent(lblInici))
                     .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(59, 59, 59)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(lblConstrasenya)
                             .addComponent(lblUsuari))
@@ -124,7 +118,7 @@ public class Login extends javax.swing.JFrame {
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(btneEnviar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(txtUsuari, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 1, Short.MAX_VALUE)
-                            .addComponent(txtContrasenya, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))))
+                            .addComponent(txtContrasenya))))
                 .addGap(108, 108, 108))
         );
         jPanel1Layout.setVerticalGroup(
@@ -136,11 +130,11 @@ public class Login extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblUsuari)
                     .addComponent(txtUsuari, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(31, 31, 31)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGap(28, 28, 28)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblConstrasenya)
                     .addComponent(txtContrasenya, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(25, 25, 25)
+                .addGap(27, 27, 27)
                 .addComponent(btneEnviar)
                 .addContainerGap(202, Short.MAX_VALUE))
         );
@@ -204,10 +198,6 @@ public class Login extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void txtContrasenyaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtContrasenyaActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtContrasenyaActionPerformed
-
     private void btneEnviarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btneEnviarActionPerformed
          Usuari usu = null;
     
@@ -266,7 +256,7 @@ try {
     private javax.swing.JLabel lblInici1;
     private javax.swing.JLabel lblLogo;
     private javax.swing.JLabel lblUsuari;
-    private javax.swing.JTextField txtContrasenya;
+    private javax.swing.JPasswordField txtContrasenya;
     private javax.swing.JTextField txtUsuari;
     // End of variables declaration//GEN-END:variables
 }
